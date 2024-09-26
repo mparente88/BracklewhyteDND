@@ -1,4 +1,4 @@
-# BracklewhyteDND
+# Pokemon Rivals
 ## Description
 This is my Description
 
