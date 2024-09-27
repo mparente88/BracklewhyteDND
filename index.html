@@ -4,13 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script defer src="./script.js"></script>
+    <script defer src="script.js"></script>
     <link rel="stylesheet" href="styles.css">
     <title>Pokémon: RIVALS!</title>
 </head>
 <body>
-    <img src="Rivals_title_screen.jpeg" id="titleScreen"/>
-
+    <button id="titleScreen">
+        <img src="Rivals_title_screen.jpeg" id="titleScreenImage">
+    </button>
     
+
+    <div id="optnsContainer" class="inactive">
+        <button id="pokemonButton">Pokemon</button>
+        <button id="backpackButton">Backpack</button>
+        <button id="restartButton">Restart</button>
+    </div>
+    <div id="mainScreen" class="inactive">
+        <h2 id="textBox" class="inactive"></h2>
+        <div id="starterSelectContainer" class="inactive">
+            <button id="growlitheSelect">Growlithe</button>
+            <button id="electrikeSelect">Electrike</button>
+            <button id="rockruffSelect">Rockruff</button>
+        </div>
+        <div id="selectionCongrats" class="inactive">
+            <h3 id="youHaveSelected">Congratulations!</h3>
+            <button id="okCongrats">OK</button>
+        </div>
+    </div>
 </body>
 </html>
