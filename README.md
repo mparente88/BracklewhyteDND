@@ -14,6 +14,9 @@ Against Wild Pokémon, you also have the option to catch the Pokémon, which wil
 
 See how many battles you can win and what Pokémon you can find!
 
+## Stretch Goals
+Multiple fights, save score, pokemon by rarity, save and swap pokemon, catch chance determined by SPD
+
 ## Wireframe
 ![WireFrame](PokemonRivals.jpg)
 

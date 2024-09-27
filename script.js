@@ -10,6 +10,8 @@ const okCongratsElement = document.querySelector(`#okCongrats`)
 const youHaveSelectedElement = document.querySelector(`#youHaveSelected`)
 const mainScreenElement = document.querySelector(`#mainScreen`)
 const textBoxElement = document.querySelector(`#textBox`)
+const nameYourStarterElement = document.querySelector(`#nameYourStarter`)
+const nameInputElement = document.querySelector(`#nameInput`)
 
 // Start screen
 
@@ -21,6 +23,7 @@ let pokemonStDef = 0
 let pokemonStSpatk = 0
 let pokemonStSpdef = 0
 let pokemonStSpd = 0
+let pokemonStNature = "nondescript"
 
 const startGame = () => {
     titleScreenElement.classList.remove(`inactive`)
@@ -28,6 +31,17 @@ const startGame = () => {
     mainScreenElement.classList.add(`inactive`)
     mainScreenElement.style.display = `none`
     textBoxElement.innerText = ``
+    nameYourStarterElement.classList.add(`inactive`)
+    pokemonStName = "Unknown Starter"
+    pokemonStType = "Unknown Starter"
+    pokemonStNature = "nondescript"
+    pokemonStHp = 0
+    pokemonStAtk = 0
+    pokemonStDef = 0
+    pokemonStSpatk = 0
+    pokemonStSpdef = 0
+    pokemonStSpd = 0
+    nameInputElement.value = ""
 }
 
 const enterStart = () => {
@@ -35,6 +49,7 @@ const enterStart = () => {
     starterSelectContainerElement.classList.remove(`inactive`)
     mainScreenElement.classList.remove(`inactive`)
     mainScreenElement.style.display = `flex`
+    textBoxElement.innerText = `Choose your Starter!`
 
     //Leave this at the end so the menu goes away once everything is loaded
     titleScreenElement.classList.add(`inactive`)
@@ -62,34 +77,51 @@ restartButtonElement.addEventListener(`click`, () => {
     startGame()
 })
 
-
 //Congrats on Starter Select messages
 growlitheSelectElement.addEventListener(`click`, () => {
     generateStarter("growlithe")
     starterSelectContainerElement.classList.add(`inactive`)
     selectionCongratsElement.classList.remove(`inactive`)
-    youHaveSelectedElement.innerText = `You have selected Growlithe!`
+    textBoxElement.innerText = `You have selected Growlithe!`
+    nameYourStarterElement.classList.remove(`inactive`)
 })
 
 electrikeSelectElement.addEventListener(`click`, () => {
     generateStarter("electrike")
     starterSelectContainerElement.classList.add(`inactive`)
     selectionCongratsElement.classList.remove(`inactive`)
-    youHaveSelectedElement.innerText = `You have selected Electrike!`
+    nameYourStarterElement.classList.remove(`inactive`)
+    textBoxElement.innerText = `You have selected Electrike!`
 })
 
 rockruffSelectElement.addEventListener(`click`, () => {
     generateStarter("rockruff")
     starterSelectContainerElement.classList.add(`inactive`)
     selectionCongratsElement.classList.remove(`inactive`)
-    youHaveSelectedElement.innerText = `You have selected Rockruff!`
+    nameYourStarterElement.classList.remove(`inactive`)
+    textBoxElement.innerText = `You have selected Rockruff!`
 })
 
-//Press OK to remove the congrats message
+//Press OK to remove the congrats message and name Starter
 okCongratsElement.addEventListener(`click`, () => {
-    selectionCongratsElement.classList.add(`inactive`)
-    textBoxElement.innerText = `With your first Pokemon at your side, you venture out into the wilds!`
+    nameMyStarter()
 })
+
+nameInputElement.addEventListener(`keypress`, (e) => {
+    if (e.key === `Enter`) {
+        nameMyStarter()
+}}
+)
+const nameMyStarter = () => {
+    selectionCongratsElement.classList.add(`inactive`)
+    nameYourStarterElement.classList.add(`inactive`)
+    if (nameInputElement.value !== "") {
+        pokemonStName = nameInputElement.value.toUpperCase()
+    } else {
+        pokemonStName = pokemonStType.toUpperCase()
+        }
+    textBoxElement.innerText = `With ${pokemonStName} the ${starterNature.toLowerCase()} ${pokemonStType}, at your side, you venture out into the wilds!`
+}
 
 // Choose and name your starting Pokemon, pull from API, adjust stats by nature (10% increase/decrease)
 // ATK = ATK * 1.10
@@ -140,7 +172,9 @@ const generateStarter = async (starter) => {
     let response = await axios.get(
         `https://pokeapi.co/api/v2/pokemon/${starter.toLowerCase()}/`
     )
-    const starterNature = determineNature()
+    pokemonStType = starter
+    console.log(pokemonStType)
+    starterNature = determineNature()
     const starterBonus = naturesObject[starterNature].bonus
     const starterPen = naturesObject[starterNature].pen
 

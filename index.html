@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -15,8 +18,10 @@
     
 
     <div id="optnsContainer" class="inactive">
-        <button id="pokemonButton">Pokemon</button>
-        <button id="backpackButton">Backpack</button>
+        <div id="pokeAndBPContainer">
+            <button id="pokemonButton">Pokemon</button>
+            <button id="backpackButton">Backpack</button>
+        </div>
         <button id="restartButton">Restart</button>
     </div>
     <div id="mainScreen" class="inactive">
@@ -26,9 +31,16 @@
             <button id="electrikeSelect">Electrike</button>
             <button id="rockruffSelect">Rockruff</button>
         </div>
-        <div id="selectionCongrats" class="inactive">
+        <div id="nameYourStarter" class="inactive">
+
             <h3 id="youHaveSelected">Congratulations!</h3>
+            <input type="text" id="nameInput" placeholder="What is its name?"/>
+        </div>
+        <div id="selectionCongrats" class="inactive">
             <button id="okCongrats">OK</button>
+        </div>
+        <div id="fightButtonContainer" class="inactive">
+            <button id="fightButton">FIGHT!</button>
         </div>
     </div>
 </body>

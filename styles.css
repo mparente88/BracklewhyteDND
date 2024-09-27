@@ -1,10 +1,29 @@
 /* Targeting all elements, box-sizing instructs browser to include border and padding in its width and height */
 *, ::before, ::after {
-    box-sizing:border-box
+    box-sizing:border-box;
+    font-family: "Press Start 2P", system-ui;
+    font-weight: 200;
+    font-style: normal;
+    font-size: 12px;
+}  
+
+main {
+    width: 450px;
+}
+
+#optnsContainer {
+    display:flex;
+    justify-content: space-between;
+    height: 45px;
+    width: 95%
+
+}
+#optionsContainer > button {
+    height: 100px;
 }
 
 #titleScreen {
-    display: block;
+    display: flex;
     margin-left: auto;
     margin-right: auto;
     padding: 0;
@@ -24,14 +43,46 @@
 
 body {
     background-color: #333;
+    width: 450px
 }
 
 #mainScreen {
     display: flex;
-    background-color: #00511e;
+    background-color: #00230d;
     color: #00b140;
+    text-shadow: 2px 2px 2px black;
+    padding: 15px;
     width: 450px;
     height: 600px;
+    flex-direction: column;
+}
+
+#textBox {
+    display:flex;
+}
+
+#starterSelectContainer {
+    display: flex;
+    box-shadow: 2px 2px 2px black;
+    width: fit-content;
+}
+#starterSelectContainer > button {
+    background-color: #005620;
+}
+
+#starterSelectContainer > button:hover {
+    background-color: #008230;
+}
+
+#selectionCongrats {
+    width: 100%;
+    overflow:auto;
+}
+
+#pokeAndBPContainer {
+    display:flex;
+
+    flex-direction: row;
 }
 
 /* Hide all closed screens and elements within them. 
