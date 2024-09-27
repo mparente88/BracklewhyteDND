@@ -12,7 +12,7 @@ Against Wild Pokémon, you also have the option to catch the Pokémon, which wil
 See how many battles you can win and what Pokémon you can find!
 
 ## Wireframe
-![Description of Image](PokemonRivals.drawio)
+![Description of Image](PokemonRivals.jpg)
 
 ### Credits
 PokéAPI is owned by Paul Hallet, Tim Malone and Alessandro Pezzé. Alongside them other core maintainers include Charles Marttinen and Sargun Vohra.
@@ -20,3 +20,5 @@ PokéAPI is owned by Paul Hallet, Tim Malone and Alessandro Pezzé. Alongside th
 Pokémon is owned by Nintendo.
 
 Pokémon: Rivals is made and maintained by Molly Parente.
+
+Rivals! title screen made by ChatGPT.

@@ -1,0 +1,26 @@
+/* Targeting all elements, box-sizing instructs browser to include border and padding in its width and height */
+*, ::before, ::after {
+    box-sizing:border-box
+}
+
+#titleScreen {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    height: 100vh;
+    max-width: 435px;
+    max-height: 1000px;
+    z-index: 100;
+    object-fit: cover;
+}
+
+body {
+    background-color: #333;
+}
+
+/* Hide all closed screens. Disable this class on an element when an event opens it. */
+
+.inactive {
+    display: none;
+}
