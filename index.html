@@ -12,35 +12,77 @@
     <title>Pokémon: RIVALS!</title>
 </head>
 <body>
+
     <button id="titleScreen">
         <img src="Rivals_title_screen.jpeg" id="titleScreenImage">
     </button>
     
-
     <div id="optnsContainer" class="inactive">
+   
         <div id="pokeAndBPContainer">
+   
             <button id="pokemonButton">Pokemon</button>
             <button id="backpackButton">Backpack</button>
+   
         </div>
+   
         <button id="restartButton">Restart</button>
+   
     </div>
+   
     <div id="mainScreen" class="inactive">
+   
         <h2 id="textBox" class="inactive"></h2>
+   
         <div id="starterSelectContainer" class="inactive">
+   
             <button id="growlitheSelect">Growlithe</button>
             <button id="electrikeSelect">Electrike</button>
             <button id="rockruffSelect">Rockruff</button>
+   
         </div>
+   
         <div id="nameYourStarter" class="inactive">
-
+   
             <h3 id="youHaveSelected">Congratulations!</h3>
             <input type="text" id="nameInput" placeholder="What is its name?"/>
+   
         </div>
+   
         <div id="selectionCongrats" class="inactive">
+   
             <button id="okCongrats">OK</button>
+   
         </div>
+   
         <div id="fightButtonContainer" class="inactive">
+   
             <button id="fightButton">FIGHT!</button>
+   
+        </div>
+
+        <div id="fightWindow" class="inactive">
+
+            <div id="opponentSpriteContainer">
+
+                <img id="opponentSprite" src=""/>
+
+                <div id="opponentStatBlock">
+                    <h5>Opponent HP: 0/0</h5>
+                </div>
+
+            </div>
+
+            <div id="playerSpriteContainer">
+
+                <img id="playerSprite" src=""/>
+
+                <div id="playerStatBlock">
+                    <h4>Player HP: 0/0</h4>
+                </div>
+
+            </div>
+
         </div>
     </div>
 </body>

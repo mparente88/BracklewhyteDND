@@ -12,6 +12,15 @@ const mainScreenElement = document.querySelector(`#mainScreen`)
 const textBoxElement = document.querySelector(`#textBox`)
 const nameYourStarterElement = document.querySelector(`#nameYourStarter`)
 const nameInputElement = document.querySelector(`#nameInput`)
+const fightButtonContainerElement = document.querySelector(`#fightButtonContainer`)
+const fightButtonElement = document.querySelector(`#fightButton`)
+const fightWindowElement = document.querySelector(`#fightWindow`)
+const opponentSpriteContainerElement = document.querySelector(`#opponentSpriteContainer`)
+const opponentSpriteElement = document.querySelector(`#opponentSprite`)
+const opponentStatBlockElement = document.querySelector(`#opponentStatBlock`)
+const playerSpriteContainerElement = document.querySelector(`#playerSpriteContainer`)
+const playerSpriteElement = document.querySelector(`#playerSprite`)
+const playerStatBlockElement = document.querySelector(`#playerStatBlock`)
 
 // Start screen
 
@@ -32,6 +41,9 @@ const startGame = () => {
     mainScreenElement.style.display = `none`
     textBoxElement.innerText = ``
     nameYourStarterElement.classList.add(`inactive`)
+    fightButtonContainerElement.classList.add(`inactive`)
+    fightWindowElement.classList.add(`inactive`)
+    fightButtonContainerElement.classList.add(`inactive`)
     pokemonStName = "Unknown Starter"
     pokemonStType = "Unknown Starter"
     pokemonStNature = "nondescript"
@@ -70,6 +82,12 @@ document.addEventListener(`keydown`, (e) => {
     }
 }
 )
+
+fightButtonElement.addEventListener(`click`, () => {
+    fightWindowElement.classList.remove(`inactive`)
+    fightButtonContainerElement.classList.add(`inactive`)
+    textBoxElement.innerText = ""
+})
 
 // Restart Button brings them back to the start menu and restarts the game
 
@@ -116,6 +134,7 @@ const nameMyStarter = () => {
     starterSelectContainerElement.classList.add(`inactive`)
     selectionCongratsElement.classList.add(`inactive`)
     nameYourStarterElement.classList.add(`inactive`)
+    fightButtonContainerElement.classList.remove(`inactive`)
     if (nameInputElement.value !== "") {
         pokemonStName = nameInputElement.value.toUpperCase()
     } else {
