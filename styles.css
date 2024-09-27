@@ -15,9 +15,10 @@ main {
     display:flex;
     justify-content: space-between;
     height: 45px;
-    width: 95%
-
+    width: 95%;
+    margin-left: 2%;
 }
+
 #optionsContainer > button {
     height: 100px;
 }
@@ -63,11 +64,15 @@ body {
 
 #starterSelectContainer {
     display: flex;
-    box-shadow: 2px 2px 2px black;
-    width: fit-content;
+    justify-content: space-between;
+    height: fit-content;
 }
 #starterSelectContainer > button {
+    display:flex;
     background-color: #005620;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
 }
 
 #starterSelectContainer > button:hover {
@@ -81,7 +86,8 @@ body {
 
 #pokeAndBPContainer {
     display:flex;
-
+    width:225px;
+    justify-content: space-between;
     flex-direction: row;
 }
 
@@ -90,5 +96,5 @@ Disable this class on an element when an event opens it.
 Enable it when an event closes it. */
 
 .inactive * {
-    display: none;
+    display: none !important;
 }

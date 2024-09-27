@@ -113,6 +113,7 @@ nameInputElement.addEventListener(`keypress`, (e) => {
 }}
 )
 const nameMyStarter = () => {
+    starterSelectContainerElement.classList.add(`inactive`)
     selectionCongratsElement.classList.add(`inactive`)
     nameYourStarterElement.classList.add(`inactive`)
     if (nameInputElement.value !== "") {
@@ -122,7 +123,6 @@ const nameMyStarter = () => {
         }
     textBoxElement.innerText = `With ${pokemonStName} the ${starterNature.toLowerCase()} ${pokemonStType}, at your side, you venture out into the wilds!`
 }
-
 // Choose and name your starting Pokemon, pull from API, adjust stats by nature (10% increase/decrease)
 // ATK = ATK * 1.10
 // DEF = DEF * .90
