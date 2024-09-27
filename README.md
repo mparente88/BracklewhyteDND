@@ -1,22 +1,22 @@
-# Pokemon Rivals
+# Pokemon: Rivals
 ## Description
-This is my Description
+Pokémon: Rivals is a browser-based game that puts you into a series of Pokémon encounters. With simple A/B decision-making mechanics, you'll be able to catch and battle randomly generated Pokémon from the vast Pokémon world, using real data pulled from PokéAPI.
 
 ## How To Get Started
-Here's how you play
+Press ENTER on the keyboard or click "Press Start" with your mouse to get started.
+
+You start with Growlithe and enter into encounters with rivals or wild Pokémon. Against rivals you can either forfeit or fight. The former will remove you from the fight while the latter will move you through a battle loop that runs your Pokémon's stats (pulled from PokéAPI) against the enemy Pokémon's stats. With random number generation, you'll see either your Pokémon's HP or the enemy Pokémon's HP decrease with each iteration of the battle loop. Each time you'll be prompted to either continue fighting or to forfeit.
+
+Against Wild Pokémon, you also have the option to catch the Pokémon, which will be a random chance determined by the enemy Pokémon's current HP and SPD stat.
+
+See how many battles you can win and what Pokémon you can find!
 
 ## Wireframe
-![Description of Image](image.png)
+![Description of Image](PokemonRivals.drawio)
 
 ### Credits
-Link
-Link
+PokéAPI is owned by Paul Hallet, Tim Malone and Alessandro Pezzé. Alongside them other core maintainers include Charles Marttinen and Sargun Vohra.
 
+Pokémon is owned by Nintendo.
 
-
-Your game must be approved by the instructors before you start
-Detailed README.md (Project Title, Description, How to Get Started, Credits)
-Wireframed plans for your design
-A successful API call with an example of the data you'll be using if applicable
-Pseudocoded steps on your game's play and win logic
-You may not use the JS Canvas Library unless you can demonstrate a clear understanding of JS and the "This." keyword!
+Pokémon: Rivals is made and maintained by Molly Parente.
