@@ -21,11 +21,13 @@ const opponentStatBlockElement = document.querySelector(`#opponentStatBlock`)
 const playerSpriteContainerElement = document.querySelector(`#playerSpriteContainer`)
 const playerSpriteElement = document.querySelector(`#playerSprite`)
 const playerStatBlockElement = document.querySelector(`#playerStatBlock`)
+const playerHPElement = document.querySelector(`#playerHP`)
+const opponentHPElement = document.querySelector(`#opponentHP`)
 
 // Start screen
 
 let pokemonStName = "Unknown Starter"
-let pokemonStType = "Unknown Starter"
+let pokemonStSpecies = "Unknown Starter"
 let pokemonStHp = 0
 let pokemonStAtk = 0
 let pokemonStDef = 0
@@ -45,7 +47,7 @@ const startGame = () => {
     fightWindowElement.classList.add(`inactive`)
     fightButtonContainerElement.classList.add(`inactive`)
     pokemonStName = "Unknown Starter"
-    pokemonStType = "Unknown Starter"
+    pokemonStSpecies = "Unknown Starter"
     pokemonStNature = "nondescript"
     pokemonStHp = 0
     pokemonStAtk = 0
@@ -83,10 +85,23 @@ document.addEventListener(`keydown`, (e) => {
 }
 )
 
-fightButtonElement.addEventListener(`click`, () => {
+fightButtonElement.addEventListener(`click`, async () => {
+    let response = await axios.get(
+        `https://pokeapi.co/api/v2/pokemon/${pokemonStSpecies.toLowerCase()}/`
+    )
+    let response2 = await axios.get(
+        `https://pokeapi.co/api/v2/pokemon/dratini/`
+    )
+    opponentHP = response2.data.stats[0].base_stat
+    opponentSprite = response2.data.sprites.other.showdown.front_default
+    playerSprite = response.data.sprites.other.showdown.back_default
     fightWindowElement.classList.remove(`inactive`)
     fightButtonContainerElement.classList.add(`inactive`)
-    textBoxElement.innerText = ""
+    textBoxElement.innerText = "You encounter your rival, Jeremy, and his Dratini!"
+    playerSpriteElement.setAttribute(`src`, playerSprite)
+    opponentSpriteElement.setAttribute(`src`, opponentSprite)
+    playerHPElement.innerText = `${pokemonStSpecies.toUpperCase()}: ${pokemonStHp} / ${pokemonStHp}`
+    opponentHPElement.innerText = `DRATINI: ${opponentHP} / ${opponentHP}`
 })
 
 // Restart Button brings them back to the start menu and restarts the game
@@ -138,13 +153,88 @@ const nameMyStarter = () => {
     if (nameInputElement.value !== "") {
         pokemonStName = nameInputElement.value.toUpperCase()
     } else {
-        pokemonStName = pokemonStType.toUpperCase()
+        pokemonStName = pokemonStSpecies.toUpperCase()
         }
-    textBoxElement.innerText = `With ${pokemonStName} the ${starterNature.toLowerCase()} ${pokemonStType}, at your side, you venture out into the wilds!`
+    textBoxElement.innerText = `With ${pokemonStName} the ${starterNature.toLowerCase()} ${pokemonStSpecies}, at your side, you venture out into the wilds (despite being 10 years old)!`
 }
 // Choose and name your starting Pokemon, pull from API, adjust stats by nature (10% increase/decrease)
 // ATK = ATK * 1.10
 // DEF = DEF * .90
+
+const typeAdvantage = {
+    normal: {
+        super: [],
+        half: ["rock", "ghost", "steel"]
+    },
+    fire: {
+        super: ["grass", "ice", "bug", "steel"],
+        half: ["fire", "water", "rock", "dragon"]
+    },
+    water: {
+        super: ["fire", "ground", "rock"],
+        half: ["water", "grass", "dragon"]
+    },
+    electric: {
+        super: ["water", "flying"],
+        half: ["electric", "grass", "ground", "dragon"]
+    },
+    grass: {
+        super: ["water", "ground", "rock"],
+        half: ["fire", "grass", "poison", "flying", "bug", "dragon", "steel"]
+    },
+    ice: {
+        super: ["grass", "ground", "flying", "dragon"],
+        half: ["fire", "water", "ice", "steel"]
+    },
+    fighting: {
+        super: ["normal", "ice", "rock", "dark", "steel"],
+        half: ["poison", "flying", "psychic", "bug", "fairy"]
+    },
+    poison: {
+        super: ["grass", "fairy"],
+        half: ["poison", "ground", "rock", "ghost", "steel"]
+    },
+    ground: {
+        super: ["fire", "electric", "poison", "rock", "steel"],
+        half: ["grass", "flying", "bug"]
+    },
+    flying: {
+        super: ["grass", "fighting", "bug"],
+        half: ["electric", "rock", "steel"]
+    },
+    psychic: {
+        super: ["fighting", "poison"],
+        half: ["psychic", "dark", "steel"]
+    },
+    bug: {
+        super: ["grass", "psychic", "dark"],
+        half: ["fire", "fighting", "poison", "flying", "ghost", "steel", "fairy"]
+    },
+    rock: {
+        super: ["fire", "ice", "flying", "bug"],
+        half: ["fighting", "ground", "steel"]
+    },
+    ghost: {
+        super: ["psychic", "ghost"],
+        half: ["normal", "dark"]
+    },
+    dragon: {
+        super: ["dragon"],
+        half: ["steel", "fairy"]
+    },
+    dark: {
+        super: ["psychic", "ghost"],
+        half: ["fighting", "dark", "fairy"]
+    },
+    steel: {
+        super: ["ice", "rock", "fairy"],
+        half: ["fire", "water", "electric", "steel"]
+    },
+    fairy: {
+        super: ["fighting", "dragon", "dark"],
+        half: ["fire", "poison", "steel"]
+    }
+}
 
 const determineNature = () => {
     const randomNature = naturesArray[Math.floor(Math.random() * naturesArray.length)];
@@ -191,14 +281,14 @@ const generateStarter = async (starter) => {
     let response = await axios.get(
         `https://pokeapi.co/api/v2/pokemon/${starter.toLowerCase()}/`
     )
-    pokemonStType = starter
-    console.log(pokemonStType)
+    pokemonStSpecies = starter
+    console.log(pokemonStSpecies)
     starterNature = determineNature()
     const starterBonus = naturesObject[starterNature].bonus
     const starterPen = naturesObject[starterNature].pen
 
     pokemonStName = response.data.name
-    pokemonStType = response.data.name
+    pokemonStSpecies = response.data.name
     pokemonStHp = Math.floor(response.data.stats[0].base_stat)
     //Nature Check and Stat Formation
     if (starterBonus ==="atk" && starterPen === "atk") {
@@ -255,6 +345,8 @@ const generateStarter = async (starter) => {
     console.log(`It has ${pokemonStHp} HP, ${pokemonStAtk} ATK, ${pokemonStDef} DEF, ${pokemonStSpatk} SP ATK, ${pokemonStSpdef} SP DEF and ${pokemonStSpd} SPD`)
     console.log(response)
 }
+
+
 
 // Fixed loop of Wild Pokemon -> Rival -> Wild Pokemon -> Rival
 // Rival Names from array list, pull from list as used

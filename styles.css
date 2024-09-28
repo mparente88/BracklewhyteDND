@@ -60,6 +60,7 @@ body {
 
 #textBox {
     display:flex;
+    word-spacing: 7px;
 }
 
 #starterSelectContainer {
@@ -89,6 +90,24 @@ body {
     width:225px;
     justify-content: space-between;
     flex-direction: row;
+}
+
+#opponentSprite {
+    width:65px;
+    margin-left: 290px;   
+}
+
+#opponentStatBlock {
+    text-align: right;
+}
+
+#playerSprite {
+    width:100px;
+    justify-content: left;
+}
+
+#playerStatBlock {
+    text-align: left;
 }
 
 /* Hide all closed screens and elements within them. 
