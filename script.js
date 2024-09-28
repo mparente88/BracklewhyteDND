@@ -29,6 +29,8 @@ const opponentHPElement = document.querySelector(`#opponentHP`)
 // to an object
 
 let pokemonStorage = []
+let playerPokemon = []
+let opponentPokemon = []
 
 let pokemonName = "Unknown Starter"
 let pokemonSpecies = "Unknown Starter"
@@ -113,17 +115,19 @@ const enterStart = () => {
 }
 
 //!In Progress!
-const initiateFight = (attacker, defender) => {
-
+const initiateFight = (player, opponent) => {
+    
+    
 }
 
-const getPokemon = (name) => {
-    const pokemon = pokemonStorage.find(pokemon => pokemon.name === pokemon)
+const getPlayer = (name) => {
+    const pokemon = pokemonStorage.find(pokemon => pokemon.name === name);
+    playerPokemon.push(pokemon)
+    console.log(playerPokemon)
+}
 
-    if (pokemon) {
-        console.log(`Found ${pokemon.name}, a ${pokemon.species}.`)
-        return pokemon
-    }
+const getOpponent = (pokemon) => {
+
 }
 
 // fightButtonElement.addEventListener(`click`, async () => {
@@ -201,6 +205,8 @@ const generatePokemon = async (species) => {
     await generateSPDEF(search, pokemonNature)
     await generateSPD(search, pokemonNature)
     await sendToStorage()
+    await getPlayer(search)
+    console.log(pokemonStorage)
 }
 
 const sendToStorage = () => {
