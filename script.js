@@ -23,6 +23,9 @@ const playerSpriteElement = document.querySelector(`#playerSprite`)
 const playerStatBlockElement = document.querySelector(`#playerStatBlock`)
 const playerHPElement = document.querySelector(`#playerHP`)
 const opponentHPElement = document.querySelector(`#opponentHP`)
+const fightOptnsContainerElement = document.querySelector(`#fightOptnsContainer`)
+const attackBtnElement = document.querySelector(`#attackBtn`)
+const fleeBtnElement = document.querySelector(`#fleeBtn`)
 
 // This is the input for a pokemon that is currently being built
 // generatePokemon() fills this in and then it'll get pushed off
@@ -171,7 +174,6 @@ const enterStart = () => {
     generateRival()
 }
 
-//!In Progress!
 const initiateFight = (player, opponent) => {
     getPlayer(player)
     getOpponent(opponent)
@@ -198,6 +200,7 @@ const initiateFight = (player, opponent) => {
     opponentFrontGif = opponentPokemon[0].frontGif
 
     fightWindowElement.classList.remove(`inactive`)
+    fightOptnsContainerElement.classList.remove(`inactive`)
     fightButtonContainerElement.classList.add(`inactive`)
     textBoxElement.innerText = "You encounter your rival, Jeremy, and his pokemon!"
     playerSpriteElement.setAttribute(`src`, playerBackGif)
@@ -208,6 +211,59 @@ const initiateFight = (player, opponent) => {
     console.log(opponentName)
 }
 
+attackBtnElement.addEventListener = (`click`, () => {
+    runAttackRound()
+})
+
+const runAttackRound = () => {
+    let playerModifier =  Math.floor(Math.random() * 10)
+    let opponentModifier = Math.floor(Math.random() * 10)
+
+    //Compare playerAtk to opponentDef
+    if (playerAtk > opponentDef) {
+        playerModifier = playerModifier + 1
+    } else if (playerAtk < opponentDef) {
+        opponentModifier = opponentModifier + 1
+    }
+
+    //Compare playerDef to opponentAtk
+
+    if (playerDef > opponentAtk) {
+        playerModifier = playerModifier + 1
+    } else if (playerDef < opponentAtk) {
+        opponentModifier = opponentModifier + 1
+    }
+
+    //Compare playerSpatk to opponentSpdef
+
+    if (playerSpatk > opponentSpdef) {
+        playerModifier = playerModifier + 1
+    } else if (playerSpatk < opponentSpdef) {
+        opponentModifier = opponentModifier + 1
+    }
+
+    //Compare playerSpdef to opponentSpatk
+
+    if (playerSpdef > opponentSpatk) {
+        playerModifier = playerModifier + 1
+    } else if (playerSpdef < opponentSpatk) {
+        opponentModifier = opponentModifier + 1
+    }
+
+    //Compare playerSpd to opponentSpd
+
+    if (playerSpd > opponentSpd) {
+        playerModifier = playerModifier + 1
+    } else if (playerSpd < opponentSpd) {
+        opponentModifier = opponentModifier + 1
+    }
+
+    //Compare types
+
+    //Deal damage
+}
+
+//Take pokemon from storage and put into player-specific storage
 const getPlayer = (name) => {
     const pokemon = pokemonStorage.find(pokemon => pokemon.name === name);
     playerPokemon = []
@@ -215,6 +271,7 @@ const getPlayer = (name) => {
     console.log(playerPokemon)
 }
 
+//Take pokemon from storage and put into opponent-specific storage
 const getOpponent = (name) => {
     const pokemon = pokemonStorage.find(pokemon => pokemon.name === name);
     opponentPokemon = []
@@ -222,6 +279,7 @@ const getOpponent = (name) => {
     console.log(opponentPokemon)
 }
 
+//Fight button for the first rival fight, initiating the game
 fightButtonElement.addEventListener(`click`, async () => {
     const pokemon = pokemonStorage.find(pokemon => pokemon.Pownership === true);
     const opponent = pokemonStorage.find(pokemon => pokemon.Rownership === true)
@@ -229,6 +287,7 @@ fightButtonElement.addEventListener(`click`, async () => {
     initiateFight(pokemon.name, opponent.name)
 })
 
+//Select Growlithe for your starter
 growlitheSelectElement.addEventListener(`click`, () => {
     generatePokemon("growlithe", "player")
     starterSelectContainerElement.classList.add(`inactive`)
@@ -237,6 +296,7 @@ growlitheSelectElement.addEventListener(`click`, () => {
     nameYourStarterElement.classList.remove(`inactive`)
 })
 
+//Select electrike for your starter
 electrikeSelectElement.addEventListener(`click`, () => {
     generatePokemon("electrike", "player")
     starterSelectContainerElement.classList.add(`inactive`)
@@ -245,6 +305,7 @@ electrikeSelectElement.addEventListener(`click`, () => {
     textBoxElement.innerText = `You have selected Electrike!`
 })
 
+//Select rockruff for your starter
 rockruffSelectElement.addEventListener(`click`, () => {
     generatePokemon("rockruff", "player")
     starterSelectContainerElement.classList.add(`inactive`)
@@ -253,6 +314,8 @@ rockruffSelectElement.addEventListener(`click`, () => {
     textBoxElement.innerText = `You have selected Rockruff!`
 })
 
+
+//Pull a Pokemon's stats from the API and put into storage
 const generatePokemon = async (species, ownership) => {
     pokemonNature = determineNature()
     
@@ -303,6 +366,7 @@ const generatePokemon = async (species, ownership) => {
     console.log(pokemonStorage)
 }
 
+//Push a pokemon into storage
 const sendToStorage = () => {
 
     const pokemon = {

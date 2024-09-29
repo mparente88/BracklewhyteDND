@@ -7,6 +7,10 @@
     font-size: 12px;
 }  
 
+button:hover {
+    cursor: pointer;
+}
+
 main {
     width: 450px;
 }
@@ -108,6 +112,13 @@ body {
 
 #playerStatBlock {
     text-align: left;
+}
+
+#fightOptnsContainer {
+    display: flex;
+    text-align: center;
+    justify-content: space-around;
+    height: 7%;
 }
 
 /* Hide all closed screens and elements within them. 
