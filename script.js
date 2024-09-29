@@ -63,6 +63,7 @@ let playerName = "Unknown Starter"
 let playerType1 = "normal"
 let playerType2 = "none"
 let playerHp = 1
+let playerCurrentHp = 1
 let playerAtk = 1
 let playerDef = 1
 let playerSpatk = 1
@@ -76,6 +77,7 @@ let opponentName = "Unknown Starter"
 let opponentType1 = "normal"
 let opponentType2 = "none"
 let opponentHp = 1
+let opponentCurrentHp = 1
 let opponentAtk = 1
 let opponentDef = 1
 let opponentSpatk = 1
@@ -186,6 +188,7 @@ const initiateFight = (player, opponent) => {
     playerType1 = playerPokemon[0].type1
     playerType2 = playerPokemon[0].type2
     playerHp = playerPokemon[0].hp
+    playerCurrentHp = playerPokemon[0].hp
     playerAtk = playerPokemon[0].atk
     playerDef = playerPokemon[0].def
     playerSpatk = playerPokemon[0].spatk
@@ -197,6 +200,7 @@ const initiateFight = (player, opponent) => {
     opponentType1 = opponentPokemon[0].type1
     opponentType2 = opponentPokemon[0].type2
     opponentHp = opponentPokemon[0].hp
+    opponentCurrentHp = opponentPokemon[0].hp
     opponentAtk = opponentPokemon[0].atk
     opponentDef = opponentPokemon[0].def
     opponentSpatk = opponentPokemon[0].spatk
@@ -226,6 +230,7 @@ const runAttackRound = () => {
     let opponentModifier = Math.floor(Math.random() * 10)
 
     //Compare playerAtk to opponentDef
+
     if (playerAtk > opponentDef) {
         playerModifier = playerModifier + 1
     } else if (playerAtk < opponentDef) {
@@ -280,6 +285,18 @@ const runAttackRound = () => {
 
     console.log(`Player's damage is multiplied by ${playerDamageMultiplier} with a modifier of ${playerModifier}!`)
     console.log(`Opponent's damage is multiplied by ${opponentDamageMultiplier} with a modifier of ${opponentModifier}!`)
+
+    if (playerModifier > (opponentModifier - 3)) {
+        opponentCurrentHp = opponentCurrentHp - (10*playerDamageMultiplier)
+    }
+
+    if (opponentModifier > (playerModifier - 3)) {
+        playerCurrentHp = playerCurrentHp - (10*opponentDamageMultiplier)
+    }
+
+    playerHPElement.innerText = `${playerName.toUpperCase()}: ${playerCurrentHp} / ${playerHp}`
+    opponentHPElement.innerText = `${opponentName.toUpperCase()}: ${opponentCurrentHp} / ${opponentHp}`
+    
 }
 
 const compareTypes = (attackingTypes, defendingTypes) => {
