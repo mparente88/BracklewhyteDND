@@ -28,10 +28,16 @@ const opponentHPElement = document.querySelector(`#opponentHP`)
 // generatePokemon() fills this in and then it'll get pushed off
 // to an object
 
+//Empty Array for all generated Pokemon
 let pokemonStorage = []
+
+//Empty Array for Pokemon available to player during fight
 let playerPokemon = []
+
+//Empty Array for Pokemon available to opponent during fight
 let opponentPokemon = []
 
+//Empty variables for Pokemon generation before pushing to storage
 let pokemonName = "Unknown Starter"
 let pokemonSpecies = "Unknown Starter"
 let pokemonType1 = "normal"
@@ -45,6 +51,32 @@ let pokemonSpd = 1
 let pokemonNature = "nondescript"
 let pokemonFrontGif = "404 Pokemon Not Found"
 let pokemonBackGif = "404 Pokemon Not Found"
+let inPokeBall = false
+
+//Empty variables for current fighting player-side Pokemon
+let playerName = "Unknown Starter"
+let playerType1 = "normal"
+let playerType2 = "none"
+let playerHp = 1
+let playerAtk = 1
+let playerDef = 1
+let playerSpatk = 1
+let playerSpdef = 1
+let playerSpd = 1
+let playerBackGif = "404 Pokemon Not Found"
+
+//Empty variables for current fighting opponent-side Pokemon
+
+let opponentName = "Unknown Starter"
+let opponentType1 = "normal"
+let opponentType2 = "none"
+let opponentHp = 1
+let opponentAtk = 1
+let opponentDef = 1
+let opponentSpatk = 1
+let opponentSpdef = 1
+let opponentSpd = 1
+let opponentFrontGif = "404 Pokemon Not Found"
 
 // Reseting values/menus
 
@@ -73,6 +105,7 @@ const startGame = () => {
     pokemonFrontGif = ""
     pokemonBackGif = ""
     nameInputElement.value = ""
+    inPokeBall = false
 }
 
 const generateRival = async () => {
@@ -88,7 +121,7 @@ const generateRival = async () => {
         rivalDetermination = "sprigatito"
     }
 
-    generatePokemon(rivalDetermination)
+    generatePokemon(rivalDetermination, false)
 }
 
 titleScreenElement.addEventListener(`click`, () => {
@@ -122,12 +155,16 @@ const initiateFight = (player, opponent) => {
 
 const getPlayer = (name) => {
     const pokemon = pokemonStorage.find(pokemon => pokemon.name === name);
+    playerPokemon = []
     playerPokemon.push(pokemon)
     console.log(playerPokemon)
 }
 
-const getOpponent = (pokemon) => {
-
+const getOpponent = (name) => {
+    const pokemon = pokemonStorage.find(pokemon => pokemon.name === name);
+    opponentPokemon = []
+    opponentPokemon.push(pokemon)
+    console.log(opponentPokemon)
 }
 
 // fightButtonElement.addEventListener(`click`, async () => {
@@ -151,7 +188,7 @@ const getOpponent = (pokemon) => {
 // })
 
 growlitheSelectElement.addEventListener(`click`, () => {
-    generatePokemon("growlithe")
+    generatePokemon("growlithe", true)
     starterSelectContainerElement.classList.add(`inactive`)
     selectionCongratsElement.classList.remove(`inactive`)
     textBoxElement.innerText = `You have selected Growlithe!`
@@ -159,7 +196,7 @@ growlitheSelectElement.addEventListener(`click`, () => {
 })
 
 electrikeSelectElement.addEventListener(`click`, () => {
-    generatePokemon("electrike")
+    generatePokemon("electrike", true)
     starterSelectContainerElement.classList.add(`inactive`)
     selectionCongratsElement.classList.remove(`inactive`)
     nameYourStarterElement.classList.remove(`inactive`)
@@ -167,14 +204,14 @@ electrikeSelectElement.addEventListener(`click`, () => {
 })
 
 rockruffSelectElement.addEventListener(`click`, () => {
-    generatePokemon("rockruff")
+    generatePokemon("rockruff", true)
     starterSelectContainerElement.classList.add(`inactive`)
     selectionCongratsElement.classList.remove(`inactive`)
     nameYourStarterElement.classList.remove(`inactive`)
     textBoxElement.innerText = `You have selected Rockruff!`
 })
 
-const generatePokemon = async (species) => {
+const generatePokemon = async (species, owned) => {
     pokemonNature = determineNature()
     
     let search = species
@@ -187,6 +224,11 @@ const generatePokemon = async (species) => {
         `https://pokeapi.co/api/v2/pokemon/${search}/`
     )
     console.log(response)
+    if (owned === true) {
+        inPokeBall = true
+    } else {
+        inPokeBall = false
+    }
     pokemonName = response.data.name
     pokemonSpecies = response.data.name
     pokemonType1 = response.data.types[0].type.name
