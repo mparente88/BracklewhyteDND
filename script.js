@@ -83,6 +83,11 @@ let opponentSpdef = 1
 let opponentSpd = 1
 let opponentFrontGif = "404 Pokemon Not Found"
 
+//Store Pokemon types for comparison during battle
+
+let playerTypes = []
+let opponentTypes = []
+
 // Reseting values/menus
 
 const startGame = () => {
@@ -211,8 +216,9 @@ const initiateFight = (player, opponent) => {
     console.log(opponentName)
 }
 
-attackBtnElement.addEventListener = (`click`, () => {
+attackBtnElement.addEventListener(`click`, () => {
     runAttackRound()
+    console.log(`Trying to fight...`)
 })
 
 const runAttackRound = () => {
@@ -260,7 +266,35 @@ const runAttackRound = () => {
 
     //Compare types
 
+    playerTypes = []
+    opponentTypes = []
+    playerTypes.push(playerType1)
+    playerTypes.push(playerType2)
+    opponentTypes.push(opponentType1)
+    opponentTypes.push(opponentType2)
+
+    let playerDamageMultiplier = compareTypes(playerTypes, opponentTypes)
+    let opponentDamageMultiplier = compareTypes(opponentTypes, playerTypes)
+
     //Deal damage
+
+    console.log(`Player's damage is multiplied by ${playerDamageMultiplier} with a modifier of ${playerModifier}!`)
+    console.log(`Opponent's damage is multiplied by ${opponentDamageMultiplier} with a modifier of ${opponentModifier}!`)
+}
+
+const compareTypes = (attackingTypes, defendingTypes) => {
+    let multiplier = 1
+
+    attackingTypes.forEach(attacker => {
+        defendingTypes.forEach(defender => {
+            if (typeAdvantage[attacker].super.includes(defender)) {
+                multiplier *= 2
+            } else if (typeAdvantage[attacker].half.includes(defender)) {
+                multiplier *= 0.5
+            }
+        })
+    })
+    return multiplier
 }
 
 //Take pokemon from storage and put into player-specific storage
@@ -555,75 +589,79 @@ const naturesObject = {
 }
 
 const typeAdvantage = {
-    normal: {
+    "none": {
+        super: [],
+        half: []
+    },
+    "normal": {
         super: [],
         half: ["rock", "ghost", "steel"]
     },
-    fire: {
+    "fire": {
         super: ["grass", "ice", "bug", "steel"],
         half: ["fire", "water", "rock", "dragon"]
     },
-    water: {
+    "water": {
         super: ["fire", "ground", "rock"],
         half: ["water", "grass", "dragon"]
     },
-    electric: {
+    "electric": {
         super: ["water", "flying"],
         half: ["electric", "grass", "ground", "dragon"]
     },
-    grass: {
+    "grass": {
         super: ["water", "ground", "rock"],
         half: ["fire", "grass", "poison", "flying", "bug", "dragon", "steel"]
     },
-    ice: {
+    "ice": {
         super: ["grass", "ground", "flying", "dragon"],
         half: ["fire", "water", "ice", "steel"]
     },
-    fighting: {
+    "fighting": {
         super: ["normal", "ice", "rock", "dark", "steel"],
         half: ["poison", "flying", "psychic", "bug", "fairy"]
     },
-    poison: {
+    "poison": {
         super: ["grass", "fairy"],
         half: ["poison", "ground", "rock", "ghost", "steel"]
     },
-    ground: {
+    "ground": {
         super: ["fire", "electric", "poison", "rock", "steel"],
         half: ["grass", "flying", "bug"]
     },
-    flying: {
+    "flying": {
         super: ["grass", "fighting", "bug"],
         half: ["electric", "rock", "steel"]
     },
-    psychic: {
+    "psychic": {
         super: ["fighting", "poison"],
         half: ["psychic", "dark", "steel"]
     },
-    bug: {
+    "bug": {
         super: ["grass", "psychic", "dark"],
         half: ["fire", "fighting", "poison", "flying", "ghost", "steel", "fairy"]
     },
-    rock: {
+    "rock": {
         super: ["fire", "ice", "flying", "bug"],
         half: ["fighting", "ground", "steel"]
     },
-    ghost: {
+    "ghost": {
         super: ["psychic", "ghost"],
         half: ["normal", "dark"]
     },
-    dragon: {
+    "dragon": {
         super: ["dragon"],
         half: ["steel", "fairy"]
     },
-    dark: {
+    "dark": {
         super: ["psychic", "ghost"],
         half: ["fighting", "dark", "fairy"]
     },
-    steel: {
+    "steel": {
         super: ["ice", "rock", "fairy"],
         half: ["fire", "water", "electric", "steel"]
     },
-    fairy: {
+    "fairy": {
         super: ["fighting", "dragon", "dark"],
         half: ["fire", "poison", "steel"]
     }
