@@ -51,7 +51,9 @@ let pokemonSpd = 1
 let pokemonNature = "nondescript"
 let pokemonFrontGif = "404 Pokemon Not Found"
 let pokemonBackGif = "404 Pokemon Not Found"
-let inPokeBall = false
+let playerOwned = false
+let rivalOwned = false
+let wildOwned = false
 
 //Empty variables for current fighting player-side Pokemon
 let playerName = "Unknown Starter"
@@ -105,7 +107,29 @@ const startGame = () => {
     pokemonFrontGif = ""
     pokemonBackGif = ""
     nameInputElement.value = ""
-    inPokeBall = false
+    playerOwned = false
+    rivalOwned = false
+    wildOwned = false
+    playerName = ""
+    playerType1 = ""
+    playerType2 = ""
+    playerHp = 0
+    playerAtk = 0
+    playerDef = 0
+    playerSpatk = 0
+    playerSpdef = 0
+    playerSpd = 0
+    playerBackGif = ""
+    opponentName = ""
+    opponentType1 = ""
+    opponentType2 = ""
+    opponentHp = 0
+    opponentAtk = 0
+    opponentDef = 0
+    opponentSpatk = 0
+    opponentSpdef = 0
+    opponentSpd = 0
+    opponentFrontGif = ""
 }
 
 const generateRival = async () => {
@@ -121,7 +145,7 @@ const generateRival = async () => {
         rivalDetermination = "sprigatito"
     }
 
-    generatePokemon(rivalDetermination, false)
+    generatePokemon(rivalDetermination, "rival")
 }
 
 titleScreenElement.addEventListener(`click`, () => {
@@ -149,8 +173,39 @@ const enterStart = () => {
 
 //!In Progress!
 const initiateFight = (player, opponent) => {
-    
-    
+    getPlayer(player)
+    getOpponent(opponent)
+    playerName = playerPokemon[0].name
+    playerType1 = playerPokemon[0].type1
+    playerType2 = playerPokemon[0].type2
+    playerHp = playerPokemon[0].hp
+    playerAtk = playerPokemon[0].atk
+    playerDef = playerPokemon[0].def
+    playerSpatk = playerPokemon[0].spatk
+    playerSpdef = playerPokemon[0].spdef
+    playerSpd = playerPokemon[0].spd
+    playerBackGif = playerPokemon[0].backGif
+
+    opponentName = opponentPokemon[0].name
+    opponentType1 = opponentPokemon[0].type1
+    opponentType2 = opponentPokemon[0].type2
+    opponentHp = opponentPokemon[0].hp
+    opponentAtk = opponentPokemon[0].atk
+    opponentDef = opponentPokemon[0].def
+    opponentSpatk = opponentPokemon[0].spatk
+    opponentSpdef = opponentPokemon[0].spdef
+    opponentSpd = opponentPokemon[0].spd
+    opponentFrontGif = opponentPokemon[0].frontGif
+
+    fightWindowElement.classList.remove(`inactive`)
+    fightButtonContainerElement.classList.add(`inactive`)
+    textBoxElement.innerText = "You encounter your rival, Jeremy, and his pokemon!"
+    playerSpriteElement.setAttribute(`src`, playerBackGif)
+    opponentSpriteElement.setAttribute(`src`, opponentFrontGif)
+    playerHPElement.innerText = `${playerName.toUpperCase()}: ${playerHp} / ${playerHp}`
+    opponentHPElement.innerText = `${opponentName.toUpperCase()}: ${opponentHp} / ${opponentHp}`
+    console.log(playerName)
+    console.log(opponentName)
 }
 
 const getPlayer = (name) => {
@@ -167,28 +222,15 @@ const getOpponent = (name) => {
     console.log(opponentPokemon)
 }
 
-// fightButtonElement.addEventListener(`click`, async () => {
-//     let response = await axios.get(
-//         `https://pokeapi.co/api/v2/pokemon/${pokemonSpecies.toLowerCase()}/`
-//     )
-//     let response2 = await axios.get(
-//         `https://pokeapi.co/api/v2/pokemon/dratini/`
-//     )
-//     pokemonHp = response.data.stats[0].base_stat
-//     opponentHP = response2.data.stats[0].base_stat
-//     opponentSprite = response2.data.sprites.other.showdown.front_default
-//     playerSprite = response.data.sprites.other.showdown.back_default
-//     fightWindowElement.classList.remove(`inactive`)
-//     fightButtonContainerElement.classList.add(`inactive`)
-//     textBoxElement.innerText = "You encounter your rival, Jeremy, and his Dratini!"
-//     playerSpriteElement.setAttribute(`src`, playerSprite)
-//     opponentSpriteElement.setAttribute(`src`, opponentSprite)
-//     playerHPElement.innerText = `${pokemonSpecies.toUpperCase()}: ${pokemonHp} / ${pokemonHp}`
-//     opponentHPElement.innerText = `DRATINI: ${opponentHP} / ${opponentHP}`
-// })
+fightButtonElement.addEventListener(`click`, async () => {
+    const pokemon = pokemonStorage.find(pokemon => pokemon.Pownership === true);
+    const opponent = pokemonStorage.find(pokemon => pokemon.Rownership === true)
+
+    initiateFight(pokemon.name, opponent.name)
+})
 
 growlitheSelectElement.addEventListener(`click`, () => {
-    generatePokemon("growlithe", true)
+    generatePokemon("growlithe", "player")
     starterSelectContainerElement.classList.add(`inactive`)
     selectionCongratsElement.classList.remove(`inactive`)
     textBoxElement.innerText = `You have selected Growlithe!`
@@ -196,7 +238,7 @@ growlitheSelectElement.addEventListener(`click`, () => {
 })
 
 electrikeSelectElement.addEventListener(`click`, () => {
-    generatePokemon("electrike", true)
+    generatePokemon("electrike", "player")
     starterSelectContainerElement.classList.add(`inactive`)
     selectionCongratsElement.classList.remove(`inactive`)
     nameYourStarterElement.classList.remove(`inactive`)
@@ -204,14 +246,14 @@ electrikeSelectElement.addEventListener(`click`, () => {
 })
 
 rockruffSelectElement.addEventListener(`click`, () => {
-    generatePokemon("rockruff", true)
+    generatePokemon("rockruff", "player")
     starterSelectContainerElement.classList.add(`inactive`)
     selectionCongratsElement.classList.remove(`inactive`)
     nameYourStarterElement.classList.remove(`inactive`)
     textBoxElement.innerText = `You have selected Rockruff!`
 })
 
-const generatePokemon = async (species, owned) => {
+const generatePokemon = async (species, ownership) => {
     pokemonNature = determineNature()
     
     let search = species
@@ -224,11 +266,21 @@ const generatePokemon = async (species, owned) => {
         `https://pokeapi.co/api/v2/pokemon/${search}/`
     )
     console.log(response)
-    if (owned === true) {
-        inPokeBall = true
+    if (ownership === "player") {
+        playerOwned = true
+        rivalOwned = false
+        wildOwned = false
+    } else if (ownership === "rival") {
+        playerOwned = false
+        rivalOwned = true
+        wildOwned = false
     } else {
-        inPokeBall = false
+        playerOwned = false
+        rivalOwned = false
+        wildOwned = true
     }
+
+
     pokemonName = response.data.name
     pokemonSpecies = response.data.name
     pokemonType1 = response.data.types[0].type.name
@@ -266,7 +318,10 @@ const sendToStorage = () => {
         spd: pokemonSpd,
         nature: pokemonNature,
         frontGif: pokemonFrontGif,
-        backGif: pokemonBackGif
+        backGif: pokemonBackGif,
+        Pownership: playerOwned,
+        Rownership: rivalOwned,
+        Wownership: wildOwned,
     };
 
     pokemonStorage.push(pokemon)
@@ -289,11 +344,14 @@ const nameMyStarter = () => {
     nameYourStarterElement.classList.add(`inactive`)
     fightButtonContainerElement.classList.remove(`inactive`)
     if (nameInputElement.value !== "") {
-        pokemonName = nameInputElement.value.toUpperCase()
+        playerName = nameInputElement.value.toUpperCase()
     } else {
-        pokemonName = pokemonSpecies.toUpperCase()
+        playerName = pokemonSpecies.toUpperCase()
         }
-    textBoxElement.innerText = `With ${pokemonName} the ${pokemonNature.toLowerCase()} ${pokemonSpecies}, at your side, you venture out into the wilds (despite being 10 years old)!`
+    const pokemon = pokemonStorage.find(pokemon => pokemon.Pownership === true);
+    pokemon.name = playerName
+
+    textBoxElement.innerText = `With ${playerName} the ${pokemonNature.toLowerCase()} ${pokemonSpecies}, at your side, you venture out into the wilds (despite being 10 years old)!`
 }
 
 const generateATK = async (species, nature) => {
