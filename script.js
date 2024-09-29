@@ -45,6 +45,7 @@ let pokemonName = "Unknown Starter"
 let pokemonSpecies = "Unknown Starter"
 let pokemonType1 = "normal"
 let pokemonType2 = "none"
+let pokemonAudio = ""
 let pokemonHp = 1
 let pokemonAtk = 1
 let pokemonDef = 1
@@ -62,6 +63,7 @@ let wildOwned = false
 let playerName = "Unknown Starter"
 let playerType1 = "normal"
 let playerType2 = "none"
+let playerAudio = ""
 let playerHp = 1
 let playerCurrentHp = 1
 let playerAtk = 1
@@ -76,6 +78,7 @@ let playerBackGif = "404 Pokemon Not Found"
 let opponentName = "Unknown Starter"
 let opponentType1 = "normal"
 let opponentType2 = "none"
+let opponentAudio = ""
 let opponentHp = 1
 let opponentCurrentHp = 1
 let opponentAtk = 1
@@ -99,9 +102,12 @@ const startGame = () => {
     mainScreenElement.style.display = `none`
     textBoxElement.innerText = ``
     nameYourStarterElement.classList.add(`inactive`)
+    nameInputElement.classList.add(`inactive`)
     fightButtonContainerElement.classList.add(`inactive`)
     fightWindowElement.classList.add(`inactive`)
     fightButtonContainerElement.classList.add(`inactive`)
+    selectionCongratsElement.classList.add(`inactive`)
+    fightOptnsContainerElement.classList.add(`inactive`)
     pokemonStorage = []
     pokemonName = "Unknown Starter"
     pokemonSpecies = "Unknown Starter"
@@ -406,6 +412,7 @@ const generatePokemon = async (species, ownership) => {
     pokemonFrontGif = response.data.sprites.other.showdown.front_default
     pokemonBackGif = response.data.sprites.other.showdown.back_default
     pokemonHp = response.data.stats[0].base_stat
+    pokemonAudio = response.data.cries.latest
     console.log(`You've made a ${pokemonNature} ${pokemonSpecies} named ${pokemonName} with ${pokemonHp} HP`)
     await generateATK(search, pokemonNature)
     await generateDEF(search, pokemonNature)
@@ -423,6 +430,7 @@ const sendToStorage = () => {
     const pokemon = {
         name: pokemonName,
         species: pokemonSpecies,
+        audio: pokemonAudio,
         type1: pokemonType1,
         type2: pokemonType2,
         hp: pokemonHp,
@@ -453,6 +461,23 @@ nameInputElement.addEventListener(`keypress`, (e) => {
         nameMyStarter()
 }}
 )
+
+playerSpriteElement.addEventListener(`click`, () => {
+    let audioUrl = playerPokemon[0].audio
+    let audio = new Audio(audioUrl)
+    
+    console.log(audio)
+    audio.play()
+})
+
+opponentSpriteElement.addEventListener(`click`, () => {
+    let audioUrl = opponentPokemon[0].audio
+    let audio = new Audio(audioUrl)
+
+    console.log(audio)
+    audio.play()
+})
+
 const nameMyStarter = () => {
     starterSelectContainerElement.classList.add(`inactive`)
     selectionCongratsElement.classList.add(`inactive`)
