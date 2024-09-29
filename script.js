@@ -1,3 +1,4 @@
+//Gather HTML elements
 const titleScreenElement = document.querySelector(`#titleScreen`)
 const optnsContainerElement = document.querySelector(`#optnsContainer`)
 const restartButtonElement = document.querySelector(`#restartButton`)
@@ -93,7 +94,7 @@ let opponentFrontGif = "404 Pokemon Not Found"
 let playerTypes = []
 let opponentTypes = []
 
-// Reseting values/menus
+// Reseting values/menus when page opens or reset button is pressed
 
 const startGame = () => {
     titleScreenElement.classList.remove(`inactive`)
@@ -148,6 +149,8 @@ const startGame = () => {
     opponentFrontGif = ""
 }
 
+//When the title screen is clicked, a random rival's pokemon is made
+
 const generateRival = async () => {
     console.log(`Generating Rival...`)
     let rivalRandom = (Math.random() * 3)
@@ -164,6 +167,8 @@ const generateRival = async () => {
     generatePokemon(rivalDetermination, "rival")
 }
 
+//Click or press enter on title screen to continue
+
 titleScreenElement.addEventListener(`click`, () => {
     enterStart()
 })
@@ -174,6 +179,8 @@ document.addEventListener(`keydown`, (e) => {
     }
 }
 )
+
+//Open up options for starter selection after title screen
 
 const enterStart = () => {
     optnsContainerElement.classList.remove(`inactive`)
@@ -186,6 +193,9 @@ const enterStart = () => {
     titleScreenElement.classList.add(`inactive`)
     generateRival()
 }
+
+// Input player/opponent to start fight between them.
+//Enter "random" for opponent to generate new.
 
 const initiateFight = (player, opponent) => {
     getPlayer(player)
@@ -226,10 +236,14 @@ const initiateFight = (player, opponent) => {
     console.log(opponentName)
 }
 
+//Button for combat logic
+
 attackBtnElement.addEventListener(`click`, () => {
     runAttackRound()
     console.log(`Trying to fight...`)
 })
+
+//Run combat logic
 
 const runAttackRound = () => {
     let playerModifier =  Math.floor(Math.random() * 10)
@@ -305,6 +319,8 @@ const runAttackRound = () => {
     
 }
 
+//x2 multiplier for type advantage, 0.5 multiplier for disadvantage
+
 const compareTypes = (attackingTypes, defendingTypes) => {
     let multiplier = 1
 
@@ -353,7 +369,7 @@ growlitheSelectElement.addEventListener(`click`, () => {
     nameYourStarterElement.classList.remove(`inactive`)
 })
 
-//Select electrike for your starter
+//Select Electrike for your starter
 electrikeSelectElement.addEventListener(`click`, () => {
     generatePokemon("electrike", "player")
     starterSelectContainerElement.classList.add(`inactive`)
@@ -362,7 +378,7 @@ electrikeSelectElement.addEventListener(`click`, () => {
     textBoxElement.innerText = `You have selected Electrike!`
 })
 
-//Select rockruff for your starter
+//Select Rockruff for your starter
 rockruffSelectElement.addEventListener(`click`, () => {
     generatePokemon("rockruff", "player")
     starterSelectContainerElement.classList.add(`inactive`)
@@ -452,6 +468,7 @@ const sendToStorage = () => {
     console.log(`${pokemonName} has been stored!`)
 }
 
+//Confirm name for Starter
 okCongratsElement.addEventListener(`click`, () => {
     nameMyStarter()
 })
@@ -462,6 +479,7 @@ nameInputElement.addEventListener(`keypress`, (e) => {
 }}
 )
 
+//Click player pokemon to hear their sound (ANNOYING)
 playerSpriteElement.addEventListener(`click`, () => {
     let audioUrl = playerPokemon[0].audio
     let audio = new Audio(audioUrl)
@@ -469,7 +487,7 @@ playerSpriteElement.addEventListener(`click`, () => {
     console.log(audio)
     audio.play()
 })
-
+//Same for opponent pokemon
 opponentSpriteElement.addEventListener(`click`, () => {
     let audioUrl = opponentPokemon[0].audio
     let audio = new Audio(audioUrl)
@@ -477,7 +495,7 @@ opponentSpriteElement.addEventListener(`click`, () => {
     console.log(audio)
     audio.play()
 })
-
+//Set Starter's name and progress story
 const nameMyStarter = () => {
     starterSelectContainerElement.classList.add(`inactive`)
     selectionCongratsElement.classList.add(`inactive`)
@@ -493,7 +511,7 @@ const nameMyStarter = () => {
 
     textBoxElement.innerText = `With ${playerName} the ${pokemonNature.toLowerCase()} ${pokemonSpecies}, at your side, you venture out into the wilds (despite being 10 years old)!`
 }
-
+//Generate stats according to nature
 const generateATK = async (species, nature) => {
     let response = await axios.get(
         `https://pokeapi.co/api/v2/pokemon/${species}/`
@@ -588,12 +606,12 @@ const generateSPD = async (species, nature) => {
     }
     console.log(`It has ${pokemonSpd} SPD!`)
 }
-
+//Randomly determine nature from Array
 const determineNature = () => {
     const randomNature = naturesArray[Math.floor(Math.random() * naturesArray.length)];
     return randomNature
   };
-
+//Nature Array
 const naturesArray = [
     "Adamant", "Bashful", "Bold", "Brave", "Calm",
     "Careful", "Docile", "Gentle", "Hardy", "Hasty",
@@ -601,7 +619,7 @@ const naturesArray = [
     "Naive", "Naughty", "Quiet", "Quirky", "Rash",
     "Relaxed", "Sassy", "Serious", "Timid"
 ]
-
+//Object to consult for nature bonuses and penalties
 const naturesObject = {
     Adamant: { bonus: "atk", pen: "spatk" },
     Bashful: { bonus: "spatk", pen: "spatk" },
@@ -629,7 +647,7 @@ const naturesObject = {
     Serious: { bonus: "spd", pen: "spd" },
     Timid: { bonus: "spd", pen: "atk" },
 }
-
+//type chart for damage modifiers
 const typeAdvantage = {
     "none": {
         super: [],
@@ -708,6 +726,8 @@ const typeAdvantage = {
         half: ["fire", "poison", "steel"]
     }
 }
+
+//Restart button to restart all values and screens
 
 restartButtonElement.addEventListener(`click`, () => {
     startGame()
