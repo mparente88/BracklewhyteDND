@@ -32,6 +32,8 @@ const rockruffHighlightElement = document.querySelector(`#rockruffHighlight`)
 const lillipupHighlightElement = document.querySelector(`#lillipupHighlight`)
 const yamperHighlightElement = document.querySelector(`#yamperHighlight`)
 
+let titleAudio
+
 // This is the input for a pokemon that is currently being built
 // generatePokemon() fills this in and then it'll get pushed off
 // to an object
@@ -191,8 +193,8 @@ const enterStart = () => {
     let audio = new Audio(audioUrl)
     
     audio.volume = parseFloat(volumeSliderElement.value)
-    console.log
     audio.play()
+
     optnsContainerElement.classList.remove(`inactive`)
     starterSelectContainerElement.classList.remove(`inactive`)
     mainScreenElement.classList.remove(`inactive`)
@@ -362,13 +364,27 @@ const getOpponent = (name) => {
     console.log(opponentPokemon)
 }
 
+//Play title music when the page loads
+window.onload = () => {
+    
+    let audioUrl = "Sound Effects/titleTheme.mp3"
+    let audio = new Audio(audioUrl)
+
+    audio.volume = parseFloat(volumeSliderElement.value)
+    audio.play()
+
+    volumeSliderElement.addEventListener('input', () => {
+        audio.volume = parseFloat(volumeSliderElement.value)
+    })
+}
+
+
 //Fight button for the first rival fight, initiating the game
 fightButtonElement.addEventListener(`click`, async () => {
     let audioUrl = "Sound Effects/click-buttons-ui-menu-sounds-effects-button-7-203601.mp3"
     let audio = new Audio(audioUrl)
     
     audio.volume = parseFloat(volumeSliderElement.value)
-    console.log
     audio.play()
     
     const pokemon = pokemonStorage.find(pokemon => pokemon.Pownership === true);
@@ -801,9 +817,22 @@ const typeAdvantage = {
     }
 }
 
+
+const updateVolume = () => {
+    const audios = document.querySelectorAll('audio')
+    const volumeValue = parseFloat(volumeSliderElement.value)
+    
+    audios.forEach(audio => {
+        audio.volume = volumeValue
+    })
+}
+
+volumeSliderElement.addEventListener('input', updateVolume)
+
+
+
+
 //Restart button to restart all values and screens
-
-
 
 restartButtonElement.addEventListener(`click`, () => {
     let audioUrl = "Sound Effects/click-buttons-ui-menu-sounds-effects-button-7-203601.mp3"
