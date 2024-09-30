@@ -3,8 +3,8 @@ const titleScreenElement = document.querySelector(`#titleScreen`)
 const optnsContainerElement = document.querySelector(`#optnsContainer`)
 const restartButtonElement = document.querySelector(`#restartButton`)
 const starterSelectContainerElement = document.querySelector(`#starterSelectContainer`)
-const growlitheSelectElement = document.querySelector(`#growlitheSelect`)
-const electrikeSelectElement = document.querySelector(`#electrikeSelect`)
+const yamperSelectElement = document.querySelector(`#yamperSelect`)
+const lillipupSelectElement = document.querySelector(`#lillipupSelect`)
 const rockruffSelectElement = document.querySelector(`#rockruffSelect`)
 const selectionCongratsElement = document.querySelector(`#selectionCongrats`)
 const okCongratsElement = document.querySelector(`#okCongrats`)
@@ -27,6 +27,10 @@ const opponentHPElement = document.querySelector(`#opponentHP`)
 const fightOptnsContainerElement = document.querySelector(`#fightOptnsContainer`)
 const attackBtnElement = document.querySelector(`#attackBtn`)
 const fleeBtnElement = document.querySelector(`#fleeBtn`)
+const volumeSliderElement = document.querySelector(`#volumeSlider`)
+const rockruffHighlightElement = document.querySelector(`#rockruffHighlight`)
+const lillipupHighlightElement = document.querySelector(`#lillipupHighlight`)
+const yamperHighlightElement = document.querySelector(`#yamperHighlight`)
 
 // This is the input for a pokemon that is currently being built
 // generatePokemon() fills this in and then it'll get pushed off
@@ -159,9 +163,9 @@ const generateRival = async () => {
     if (rivalRandom >= 0 && rivalRandom < 1) {
         rivalDetermination = "shinx"
     } else if (rivalRandom >= 1 && rivalRandom < 2) {
-        rivalDetermination = "purrloin"
+        rivalDetermination = "espurr"
     } else {
-        rivalDetermination = "sprigatito"
+        rivalDetermination = "skitty"
     }
 
     generatePokemon(rivalDetermination, "rival")
@@ -183,6 +187,12 @@ document.addEventListener(`keydown`, (e) => {
 //Open up options for starter selection after title screen
 
 const enterStart = () => {
+    let audioUrl = "/Sound Effects/click-buttons-ui-menu-sounds-effects-button-6-203600.mp3"
+    let audio = new Audio(audioUrl)
+    
+    audio.volume = parseFloat(volumeSliderElement.value)
+    console.log
+    audio.play()
     optnsContainerElement.classList.remove(`inactive`)
     starterSelectContainerElement.classList.remove(`inactive`)
     mainScreenElement.classList.remove(`inactive`)
@@ -354,32 +364,81 @@ const getOpponent = (name) => {
 
 //Fight button for the first rival fight, initiating the game
 fightButtonElement.addEventListener(`click`, async () => {
+    let audioUrl = "Sound Effects/click-buttons-ui-menu-sounds-effects-button-7-203601.mp3"
+    let audio = new Audio(audioUrl)
+    
+    audio.volume = parseFloat(volumeSliderElement.value)
+    console.log
+    audio.play()
+    
     const pokemon = pokemonStorage.find(pokemon => pokemon.Pownership === true);
     const opponent = pokemonStorage.find(pokemon => pokemon.Rownership === true)
 
     initiateFight(pokemon.name, opponent.name)
 })
 
-//Select Growlithe for your starter
-growlitheSelectElement.addEventListener(`click`, () => {
-    generatePokemon("growlithe", "player")
+//Select Yamper for your starter
+yamperSelectElement.addEventListener(`mouseover`, () => {
+    yamperHighlightElement.classList.remove(`inactive`)
+})
+
+yamperSelectElement.addEventListener(`mouseout`, () => {
+    yamperHighlightElement.classList.add(`inactive`)
+})
+
+yamperSelectElement.addEventListener(`click`, () => {
+    let audioUrl = "Sound Effects/click-buttons-ui-menu-sounds-effects-button-7-203601.mp3"
+    let audio = new Audio(audioUrl)
+    
+    audio.volume = parseFloat(volumeSliderElement.value)
+    console.log
+    audio.play()
+    generatePokemon("yamper", "player")
     starterSelectContainerElement.classList.add(`inactive`)
     selectionCongratsElement.classList.remove(`inactive`)
-    textBoxElement.innerText = `You have selected Growlithe!`
+    textBoxElement.innerText = `You have selected Yamper!`
     nameYourStarterElement.classList.remove(`inactive`)
 })
 
-//Select Electrike for your starter
-electrikeSelectElement.addEventListener(`click`, () => {
-    generatePokemon("electrike", "player")
+//Select Lillipup for your starter
+lillipupSelectElement.addEventListener(`mouseover`, () => {
+    lillipupHighlightElement.classList.remove(`inactive`)
+})
+
+lillipupSelectElement.addEventListener(`mouseout`, () => {
+    lillipupHighlightElement.classList.add(`inactive`)
+})
+
+lillipupSelectElement.addEventListener(`click`, () => {
+    let audioUrl = "Sound Effects/click-buttons-ui-menu-sounds-effects-button-7-203601.mp3"
+    let audio = new Audio(audioUrl)
+    
+    audio.volume = parseFloat(volumeSliderElement.value)
+    console.log
+    audio.play()
+    generatePokemon("lillipup", "player")
     starterSelectContainerElement.classList.add(`inactive`)
     selectionCongratsElement.classList.remove(`inactive`)
     nameYourStarterElement.classList.remove(`inactive`)
-    textBoxElement.innerText = `You have selected Electrike!`
+    textBoxElement.innerText = `You have selected Lillipup!`
 })
 
 //Select Rockruff for your starter
+rockruffSelectElement.addEventListener(`mouseover`, () => {
+    rockruffHighlightElement.classList.remove(`inactive`)
+})
+
+rockruffSelectElement.addEventListener(`mouseout`, () => {
+    rockruffHighlightElement.classList.add(`inactive`)
+})
+
 rockruffSelectElement.addEventListener(`click`, () => {
+    let audioUrl = "Sound Effects/click-buttons-ui-menu-sounds-effects-button-7-203601.mp3"
+    let audio = new Audio(audioUrl)
+    
+    audio.volume = parseFloat(volumeSliderElement.value)
+    console.log
+    audio.play()
     generatePokemon("rockruff", "player")
     starterSelectContainerElement.classList.add(`inactive`)
     selectionCongratsElement.classList.remove(`inactive`)
@@ -470,10 +529,22 @@ const sendToStorage = () => {
 
 //Confirm name for Starter
 okCongratsElement.addEventListener(`click`, () => {
+    let audioUrl = "Sound Effects/click-buttons-ui-menu-sounds-effects-button-7-203601.mp3"
+    let audio = new Audio(audioUrl)
+    
+    audio.volume = parseFloat(volumeSliderElement.value)
+    console.log
+    audio.play()
     nameMyStarter()
 })
 
 nameInputElement.addEventListener(`keypress`, (e) => {
+    let audioUrl = "Sound Effects/click-buttons-ui-menu-sounds-effects-button-7-203601.mp3"
+    let audio = new Audio(audioUrl)
+    
+    audio.volume = parseFloat(volumeSliderElement.value)
+    console.log
+    audio.play()
     if (e.key === `Enter`) {
         nameMyStarter()
 }}
@@ -484,15 +555,18 @@ playerSpriteElement.addEventListener(`click`, () => {
     let audioUrl = playerPokemon[0].audio
     let audio = new Audio(audioUrl)
     
-    console.log(audio)
+    audio.volume = parseFloat(volumeSliderElement.value)
+    console.log
     audio.play()
 })
+
 //Same for opponent pokemon
 opponentSpriteElement.addEventListener(`click`, () => {
     let audioUrl = opponentPokemon[0].audio
     let audio = new Audio(audioUrl)
 
-    console.log(audio)
+    audio.volume = parseFloat(volumeSliderElement.value)
+    console.log
     audio.play()
 })
 //Set Starter's name and progress story
@@ -729,7 +803,15 @@ const typeAdvantage = {
 
 //Restart button to restart all values and screens
 
+
+
 restartButtonElement.addEventListener(`click`, () => {
+    let audioUrl = "Sound Effects/click-buttons-ui-menu-sounds-effects-button-7-203601.mp3"
+    let audio = new Audio(audioUrl)
+    
+    audio.volume = parseFloat(volumeSliderElement.value)
+    console.log
+    audio.play()
     startGame()
 })
 

@@ -36,10 +36,75 @@
    
         <div id="starterSelectContainer" class="inactive">
    
-            <button id="growlitheSelect">Growlithe</button>
-            <button id="electrikeSelect">Electrike</button>
+            <button id="lillipupSelect">Lillipup</button>
             <button id="rockruffSelect">Rockruff</button>
-   
+            <button id="yamperSelect">Yamper</button>
+
+        </div>
+
+        <div id = "starterHighlights">
+
+            <div id="yamperHighlight" class="inactive">
+                <h1 id="yamperH1">Yamper</h1>
+                <span id="yamperSpan">Electric</span>
+                <p id="yamperP">Yamper has an organ in its body that generates electricity, 
+                    and this organ is activated when Yamper runs around. 
+                    Yamper can't store the electricity it generates, so it's 
+                    often seen running around with electric sparks crackling 
+                    around it.</p>
+                <div id="yamperList">
+                    <ul>
+                        <li class="yamperStats">Hp: 59</li>
+                        <li class="yamperStats">Atk: 45</li>
+                        <li class="yamperStats">Def: 50</li>
+                        <li class="yamperStats">Sp. Atk: 40</li>
+                        <li class="yamperStats">Sp. Def: 50</li>
+                        <li class="yamperStats">Speed: 26</li>
+                    </ul>
+                    <img id="yamperPic" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/835.gif"/>
+                </div>    
+            </div>
+
+            <div id="lillipupHighlight" class="inactive">
+                <h1 id="lillipupH1">Lillipup</h1>
+                <span id="lillipupSpan">Normal</span>
+                <p id="lillipupP">This Pokémon is courageous but also cautious. 
+                    It uses the soft fur covering its face to collect information 
+                    about its surroundings.</p>
+                <div id="lillipupList">
+                    <ul>
+                        <li class="lillipupStats">Hp: 45</li>
+                        <li class="lillipupStats">Atk: 60</li>
+                        <li class="lillipupStats">Def: 45</li>
+                        <li class="lillipupStats">Sp. Atk: 25</li>
+                        <li class="lillipupStats">Sp. Def: 45</li>
+                        <li class="lillipupStats">Speed: 55</li>
+                    </ul>
+                    <img id="lillipupPic" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/506.gif"/>
+                </div>
+            </div>
+
+            <div id="rockruffHighlight" class="inactive">
+                <h1 id="rockruffH1">Lillipup</h1>
+                <span id="rockruffSpan">Normal</span>
+                <p id="rockruffP">Rockruff has an excellent sense of smell, and 
+                    once it has smelled an odor, it doesn’t forget it! There are 
+                    tales of these Pokémon getting separated from their Trainers, 
+                    then using the faintest traces of their scent to track them 
+                    for days until they are reunited!</p>
+                <div id="rockruffList">
+                    <ul>
+                        <li class="rockruffStats">Hp: 45</li>
+                        <li class="rockruffStats">Atk: 65</li>
+                        <li class="rockruffStats">Def: 40</li>
+                        <li class="rockruffStats">Sp. Atk: 30</li>
+                        <li class="rockruffStats">Sp. Def: 40</li>
+                        <li class="rockruffStats">Speed: 60</li>
+                    </ul>
+                    <img id="rockruffPic" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/744.gif"/>
+                </div>
+            </div>
+
         </div>
    
         <div id="nameYourStarter" class="inactive">
@@ -63,9 +128,9 @@
 
         <div id="fightWindow" class="inactive">
 
-            <div id="opponentSpriteContainer">
+            <div id="opponentSpriteContainer" class="spriteContainer">
 
-                <img id="opponentSprite" src=""/>
+                <img id="opponentSprite" class="sprite" src=""/>
 
                 <div id="opponentStatBlock">
                     <h5 id="opponentHP">Opponent HP: 0/0</h5>
@@ -73,9 +138,9 @@
 
             </div>
 
-            <div id="playerSpriteContainer">
+            <div id="playerSpriteContainer" class="spriteContainer">
 
-                <img id="playerSprite" src=""/>
+                <img id="playerSprite" class="sprite" src=""/>
 
                 <div id="playerStatBlock">
                     <h4 id="playerHP">Player HP: 0/0</h4>
@@ -93,6 +158,10 @@
 
         </div>
 
+    </div>
+    <div>
+        <h3>Volume:</h3>
+        <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5">
     </div>
 </body>
 </html>
