@@ -43,6 +43,7 @@ button:hover {
 #yamperList > img {
     width: 30%;
     height: auto;
+    filter: hue-rotate(100deg) brightness(0.7) saturate(2);
 }
 
 #lillipupList {
@@ -53,6 +54,7 @@ button:hover {
 #lillipupList > img {
     width: 30%;
     height: auto;
+    filter: hue-rotate(100deg) brightness(0.7) saturate(2);
 }
 
 #rockruffList {
@@ -63,6 +65,7 @@ button:hover {
 #rockruffList > img {
     width: 30%;
     height: auto;
+    filter: hue-rotate(100deg) brightness(0.7) saturate(2);
 }
 
 #titleScreenImage {
@@ -133,6 +136,7 @@ body {
 #opponentSprite {
     width:65px;
     margin-left: 290px;   
+    filter: hue-rotate(100deg) brightness(0.7) saturate(2);
 }
 
 #opponentStatBlock {
@@ -146,6 +150,7 @@ body {
 #playerSprite {
     width:100px;
     justify-content: left;
+    filter: hue-rotate(100deg) brightness(0.7) saturate(2);
 }
 
 #playerStatBlock {

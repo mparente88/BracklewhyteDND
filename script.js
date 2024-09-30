@@ -199,7 +199,8 @@ const enterStart = () => {
     starterSelectContainerElement.classList.remove(`inactive`)
     mainScreenElement.classList.remove(`inactive`)
     mainScreenElement.style.display = `flex`
-    textBoxElement.innerText = `Choose your Starter!`
+    textBoxElement.innerText = `Today you leave Assemblytown to embark on your very own Pokémon journey.
+    Professor Maple is even giving you your first Pokémon! Which one will you choose?`
 
     //Leave this at the end so the menu goes away once everything is loaded
     titleScreenElement.classList.add(`inactive`)
@@ -210,6 +211,12 @@ const enterStart = () => {
 //Enter "random" for opponent to generate new.
 
 const initiateFight = (player, opponent) => {
+    let audio3Url = "Sound Effects/1-05. Your Rival Appears.mp3"
+    let audio3 = new Audio(audio3Url)
+    
+    audio3.volume = parseFloat(volumeSliderElement.value)
+    audio3.play()
+
     getPlayer(player)
     getOpponent(opponent)
     playerName = playerPokemon[0].name
@@ -239,7 +246,6 @@ const initiateFight = (player, opponent) => {
     fightWindowElement.classList.remove(`inactive`)
     fightOptnsContainerElement.classList.remove(`inactive`)
     fightButtonContainerElement.classList.add(`inactive`)
-    textBoxElement.innerText = "You encounter your rival, Jeremy, and his pokemon!"
     playerSpriteElement.setAttribute(`src`, playerBackGif)
     opponentSpriteElement.setAttribute(`src`, opponentFrontGif)
     playerHPElement.innerText = `${playerName.toUpperCase()}: ${playerHp} / ${playerHp}`
@@ -389,7 +395,7 @@ fightButtonElement.addEventListener(`click`, async () => {
     
     const pokemon = pokemonStorage.find(pokemon => pokemon.Pownership === true);
     const opponent = pokemonStorage.find(pokemon => pokemon.Rownership === true)
-
+    textBoxElement.innerText = "You encounter your rival, Jeremy, and his pokemon!"
     initiateFight(pokemon.name, opponent.name)
 })
 
