@@ -164,6 +164,15 @@ body {
     height: 7%;
 }
 
+#volumeContainer {
+    display: flex;
+    width: fit-content;
+    padding: 5px;
+    border-width: 3px;
+    border-style: solid;
+    background-color: lightgray;
+}
+
 /* Hide all closed screens and elements within them. 
 Disable this class on an element when an event opens it.
 Enable it when an event closes it. */

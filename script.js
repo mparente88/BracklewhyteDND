@@ -31,8 +31,7 @@ const volumeSliderElement = document.querySelector(`#volumeSlider`)
 const rockruffHighlightElement = document.querySelector(`#rockruffHighlight`)
 const lillipupHighlightElement = document.querySelector(`#lillipupHighlight`)
 const yamperHighlightElement = document.querySelector(`#yamperHighlight`)
-
-let titleAudio
+let fighting = false
 
 // This is the input for a pokemon that is currently being built
 // generatePokemon() fills this in and then it'll get pushed off
@@ -153,6 +152,7 @@ const startGame = () => {
     opponentSpdef = 0
     opponentSpd = 0
     opponentFrontGif = ""
+    fighting = false
 }
 
 //When the title screen is clicked, a random rival's pokemon is made
@@ -211,14 +211,12 @@ const enterStart = () => {
 //Enter "random" for opponent to generate new.
 
 const initiateFight = (player, opponent) => {
-    let audio3Url = "Sound Effects/1-05. Your Rival Appears.mp3"
-    let audio3 = new Audio(audio3Url)
-    
-    audio3.volume = parseFloat(volumeSliderElement.value)
-    audio3.play()
+
+    fighting = true
 
     getPlayer(player)
     getOpponent(opponent)
+
     playerName = playerPokemon[0].name
     playerType1 = playerPokemon[0].type1
     playerType2 = playerPokemon[0].type2
@@ -325,11 +323,27 @@ const runAttackRound = () => {
     console.log(`Opponent's damage is multiplied by ${opponentDamageMultiplier} with a modifier of ${opponentModifier}!`)
 
     if (playerModifier > (opponentModifier - 3)) {
+
         opponentCurrentHp = opponentCurrentHp - (10*playerDamageMultiplier)
     }
 
     if (opponentModifier > (playerModifier - 3)) {
         playerCurrentHp = playerCurrentHp - (10*opponentDamageMultiplier)
+    }
+
+    if (opponentCurrentHp < 0) {
+        opponentCurrentHp = 0
+    }
+
+    if (playerCurrentHp < 0) {
+        playerCurrentHp = 0
+    }
+
+    if (opponentCurrentHp === 0) {
+        opponentCurrentHp = 0
+        endFight("player")
+    } else if (playerCurrentHp === 0) {
+        endFight("rival")
     }
 
     playerHPElement.innerText = `${playerName.toUpperCase()}: ${playerCurrentHp} / ${playerHp}`
@@ -370,6 +384,67 @@ const getOpponent = (name) => {
     console.log(opponentPokemon)
 }
 
+endFight = (winner) => {
+    console.log(`The winner is ${winner}!`)
+    fightOptnsContainerElement.classList.add(`inactive`)
+    if (winner === "player") {
+        textBoxElement.innerText = `You win!`
+
+        if (Math.random() >= 0.4) {
+            playerPokemon[0].hp = playerPokemon[0].hp + 5
+            console.log(`HP Level up!`)
+            setTimeout(() => {
+                textBoxElement.innerText = `${playerPokemon[0].name}'s HP has increased by 5!`
+            }, 2000)
+        }
+
+        if (Math.random() >= 0.4) {
+            playerPokemon[0].atk = playerPokemon[0].atk + 3
+            console.log(`ATK Level up!`)
+            setTimeout(() => {
+                textBoxElement.innerText = `${playerPokemon[0].name}'s ATK has increased by 3!`
+            }, 4000)
+        }
+
+        if (Math.random() >= 0.4) {
+            playerPokemon[0].def = playerPokemon[0].def + 3
+            console.log(`DEF Level up!`)
+            setTimeout(() => {
+                textBoxElement.innerText = `${playerPokemon[0].name}'s DEF has increased by 3!`
+            }, 6000)
+        }
+
+        if (Math.random() >= 0.4) {
+            playerPokemon[0].spatk = playerPokemon[0].spatk + 3
+            console.log(`SP. ATK Level up!`)
+            setTimeout(() => {
+                textBoxElement.innerText = `${playerPokemon[0].name}'s SP. ATK has increased by 3!`
+            }, 8000)
+        }
+
+        if (Math.random() >= 0.4) {
+            playerPokemon[0].spdef = playerPokemon[0].spdef + 3
+            console.log(`SP. DEF Level up!`)
+            setTimeout(() => {
+                textBoxElement.innerText = `${playerPokemon[0].name}'s SP. DEF has increased by 3!`
+            }, 10000)
+        }
+
+        if (Math.random() >= 0.4) {
+            playerPokemon[0].spd = playerPokemon[0].spd + 3
+            console.log(`SPD Level up!`)
+            setTimeout(() => {
+                textBoxElement.innerText = `${playerPokemon[0].name}'s SPD has increased by 3!`
+            }, 12000)
+        }
+
+    } else if (winner === "rival") {
+        textBoxElement.innerText = `Jeremy wins!`
+    } else {
+        textBoxElement.innerText = "You lose!"
+    }
+}
+
 //Play title music when the page loads
 window.onload = () => {
     
@@ -386,18 +461,29 @@ window.onload = () => {
 
 
 //Fight button for the first rival fight, initiating the game
-fightButtonElement.addEventListener(`click`, async () => {
-    let audioUrl = "Sound Effects/click-buttons-ui-menu-sounds-effects-button-7-203601.mp3"
-    let audio = new Audio(audioUrl)
+fightButtonElement.addEventListener('click', async () => {
+    let audio3Url = "Sound Effects/1-05. Your Rival Appears.mp3"
+    let audio3 = new Audio(audio3Url)
     
-    audio.volume = parseFloat(volumeSliderElement.value)
-    audio.play()
+    audio3.volume = parseFloat(volumeSliderElement.value)
+    audio3.play()
+
+    volumeSliderElement.addEventListener('input', () => {
+        audio3.volume = parseFloat(volumeSliderElement.value)
+    })
+    updateVolume()
     
-    const pokemon = pokemonStorage.find(pokemon => pokemon.Pownership === true);
+    const pokemon = pokemonStorage.find(pokemon => pokemon.Pownership === true)
     const opponent = pokemonStorage.find(pokemon => pokemon.Rownership === true)
-    textBoxElement.innerText = "You encounter your rival, Jeremy, and his pokemon!"
+    textBoxElement.innerText = `You encounter your rival, Jeremy, and his pokemon, ${opponent.name.toUpperCase()}!`
+    setTimeout(() => {
+        if (fighting) {
+            textBoxElement.innerText = `Jeremy: "Just give up. You'll never beat me with that pathetic ${pokemon.species}!"`
+        }
+    }, 5500)
     initiateFight(pokemon.name, opponent.name)
 })
+
 
 //Select Yamper for your starter
 yamperSelectElement.addEventListener(`mouseover`, () => {
@@ -833,16 +919,12 @@ const updateVolume = () => {
     })
 }
 
-volumeSliderElement.addEventListener('input', updateVolume)
-
-
-
-
 //Restart button to restart all values and screens
 
 restartButtonElement.addEventListener(`click`, () => {
     let audioUrl = "Sound Effects/click-buttons-ui-menu-sounds-effects-button-7-203601.mp3"
     let audio = new Audio(audioUrl)
+
     
     audio.volume = parseFloat(volumeSliderElement.value)
     console.log
