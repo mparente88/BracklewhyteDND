@@ -385,6 +385,7 @@ const getOpponent = (name) => {
 }
 
 endFight = (winner) => {
+    fighting = false
     console.log(`The winner is ${winner}!`)
     fightOptnsContainerElement.classList.add(`inactive`)
     if (winner === "player") {
@@ -440,6 +441,9 @@ endFight = (winner) => {
 
     } else if (winner === "rival") {
         textBoxElement.innerText = `Jeremy wins!`
+        setTimeout(() => {
+            textBoxElement.innerText = `Jeremy: Ha! Better luck next time!`
+        }, 5000)
     } else {
         textBoxElement.innerText = "You lose!"
     }
