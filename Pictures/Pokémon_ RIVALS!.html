@@ -1,21 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <meta charset="UTF-8">
+<!-- saved from url=(0032)http://127.0.0.1:5500/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+    <link href="./Pokémon_ RIVALS!_files/css2" rel="stylesheet">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script defer src="script.js"></script>
-    <link rel="stylesheet" href="styles.css">
+    <script src="./Pokémon_ RIVALS!_files/axios.min.js"></script>
+    <script defer="" src="./Pokémon_ RIVALS!_files/script.js"></script>
+    <link rel="stylesheet" href="./Pokémon_ RIVALS!_files/styles.css">
     <title>Pokémon: RIVALS!</title>
-</head>
+<!-- Code injected by Five-server -->
+  <script async="" data-id="five-server" data-file="/Users/mparente88/code/ga/unit1/project1/PokemonRivals/index.html" type="application/javascript" src="./Pokémon_ RIVALS!_files/fiveserver.js"></script>
+  <style>      
+      /* Injected by five-server */
+      /*[data-highlight="true"] {
+        border: 1px rgb(90,170,255) solid !important;
+        background-color: rgba(155,215,255,0.5);
+        animation: fadeOutHighlight 1s forwards 0.5s;
+      }
+      img[data-highlight="true"] {
+        filter: sepia(100%) hue-rotate(180deg) saturate(200%);
+        animation: fadeOutHighlightIMG 0.5s forwards 0.5s;
+      }*/
+      @keyframes fadeOutHighlight {
+        from {background-color: rgba(155,215,255,0.5);}
+        to {background-color: rgba(155,215,255,0);}
+      }      
+      @keyframes fadeOutHighlightIMG {
+        0% {filter: sepia(100%) hue-rotate(180deg) saturate(200%);}
+        33% {filter: sepia(66%) hue-rotate(180deg) saturate(100%);}
+        50% {filter: sepia(50%) hue-rotate(90deg) saturate(50%);}
+        66% {filter: sepia(33%) hue-rotate(0deg) saturate(100%);}
+        100% {filter: sepia(0%) hue-rotate(0deg) saturate(100%);}
+      }
+      @keyframes fiveserverInfoPopup {
+        0%   {top:-40px;}
+        15%  {top:4px;}
+        85%  {top:4px;}
+        100% {top:-40px;}
+      }
+      /*smaller*/
+      @media (max-width: 640px) {
+        #fiveserver-info-wrapper {
+          max-width: 98%;
+        }
+        #fiveserver-info {
+          border-radius: 0px;
+        }      
+      }
+
+      </style></head>
 <body>
 
     <div id="titleScreenContainer">
         <button id="titleScreen">
-            <img src="Pictures/Rivals_title_screen.jpeg" id="titleScreenImage">
+            <img src="./Pokémon_ RIVALS!_files/Rivals_title_screen.jpeg" id="titleScreenImage">
         </button>
     </div>
     
@@ -32,12 +72,12 @@
    
     </div>
    
-    <div id="mainScreen" class="inactive">
+    <div id="mainScreen" class="inactive" style="display: none;">
    
         <h2 id="textBox" class="inactive"></h2>
 
         <div id="dialoguePicContainer" class="inactive">
-            <img id="dialoguePic" src="Pictures/Screenshot 2024-10-01 at 2.07.30 PM.png"/>
+            <img id="dialoguePic" src="./Pokémon_ RIVALS!_files/Screenshot 2024-10-01 at 2.07.30 PM.png">
         </div>
    
         <div id="starterSelectContainer" class="inactive">
@@ -48,7 +88,7 @@
 
         </div>
 
-        <div id = "starterHighlights">
+        <div id="starterHighlights">
 
             <div id="yamperHighlight" class="inactive">
                 <h1 id="yamperH1">Yamper</h1>
@@ -67,7 +107,7 @@
                         <li class="yamperStats">Sp. Def: 50</li>
                         <li class="yamperStats">Speed: 26</li>
                     </ul>
-                    <img id="yamperPic" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/835.gif"/>
+                    <img id="yamperPic" src="./Pokémon_ RIVALS!_files/835.gif">
                 </div>    
             </div>
 
@@ -86,7 +126,7 @@
                         <li class="lillipupStats">Sp. Def: 45</li>
                         <li class="lillipupStats">Speed: 55</li>
                     </ul>
-                    <img id="lillipupPic" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/506.gif"/>
+                    <img id="lillipupPic" src="./Pokémon_ RIVALS!_files/506.gif">
                 </div>
             </div>
 
@@ -107,7 +147,7 @@
                         <li class="rockruffStats">Sp. Def: 40</li>
                         <li class="rockruffStats">Speed: 60</li>
                     </ul>
-                    <img id="rockruffPic" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/744.gif"/>
+                    <img id="rockruffPic" src="./Pokémon_ RIVALS!_files/744.gif">
                 </div>
             </div>
 
@@ -116,7 +156,7 @@
         <div id="nameYourStarter" class="inactive">
    
             <h3 id="youHaveSelected">Congratulations!</h3>
-            <input type="text" id="nameInput" placeholder="What is its name?"/>
+            <input type="text" id="nameInput" placeholder="What is its name?" class="inactive">
    
         </div>
    
@@ -136,7 +176,7 @@
 
             <div id="opponentSpriteContainer" class="spriteContainer">
 
-                <img id="opponentSprite" class="sprite" src=""/>
+                <img id="opponentSprite" class="sprite" src="http://127.0.0.1:5500/index.html">
 
                 <div id="opponentStatBlock">
                     <h5 id="opponentHP">Opponent HP: 0/0</h5>
@@ -146,7 +186,7 @@
 
             <div id="playerSpriteContainer" class="spriteContainer">
 
-                <img id="playerSprite" class="sprite" src=""/>
+                <img id="playerSprite" class="sprite" src="http://127.0.0.1:5500/index.html">
 
                 <div id="playerStatBlock">
                     <h4 id="playerHP">Player HP: 0/0</h4>
@@ -167,18 +207,16 @@
     </div>
 
     <div id="chatGPTInterface">
-        <p>Beep boop... send a message to Professor Maple?</p>
-        <input type="text" id="player-question" placeholder="Ask a question...">
+        <p>Professor Maple: "Hello, young trainer! How can I help you?"</p>
+        <input type="text" id="player-question" placeholder="Ask Professor Maple a question...">
         <button id="ask-question">Ask</button>
       </div>
       
-      <div id="chat-response">
-        <!-- ChatGPT's response as Professor Maple will appear here -->
-      </div>
+      <div id="chat-response"><p>ChatGPT: "Sorry, I couldn't get an answer from ChatGPT. Please try again later."</p></div>
 
     <div id="volumeContainer">
         <h3>Volume:</h3>
         <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5">
     </div>
-</body>
-</html>
+
+</body></html>

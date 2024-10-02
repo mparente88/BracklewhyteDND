@@ -1,5 +1,4 @@
 //Connect to ChatGPT
-//ChatGPT helped me connect this, so I take absolutely no credit for the code to connect it to the ChatGPT API.
 
 document.getElementById('ask-question').addEventListener('click', async function () {
     const question = document.getElementById('player-question').value
@@ -11,41 +10,40 @@ document.getElementById('ask-question').addEventListener('click', async function
   
     const response = await askChatGPT(question)
   
-    document.getElementById('chat-response').innerHTML = `<p>Professor Maple: "${response}"</p>`
+    document.getElementById('chat-response').innerHTML = `<p>ChatGPT: "${response}"</p>`
   })
   
   async function askChatGPT(question) {
     try {
-      const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      const response = await fetch('https://api.openai.com/v1//chat/completions', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer sk-pzXB07SSN0-N8QlJ1FdMIiHmh-iI9uuqOi_w6un1jVT3BlbkFJ379mJpBQP5Fa4Vjkj4kmU4FZObbWRAnnTXH1CWtFUA`, // Replace with your actual API key
+          'Authorization': `Bearer sk-pzXB07SSN0-N8QlJ1FdMIiHmh-iI9uuqOi_w6un1jVT3BlbkFJ379mJpBQP5Fa4Vjkj4kmU4FZObbWRAnnTXH1CWtFUA`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          model: 'gpt-4',  // Specify the GPT-4 model
-          messages: [
-            { role: 'system', content: 'You are Professor Maple, a 20-something-year-old Pokémon Professor who is friendly, bubbly, and always excited to help trainers. You love to reward your students with PokePoints, make silly jokes, and use an exorbitant amount of emojis to express yourself! You only response in 150 characters or less. This is their first day of their Pokemon journey and you want to be as helpful and encouraging as possible, but you are so excited for them! The trainer has a rival, also a student of yours, named Jeremy.'},
-            { role: 'user', content: question }
-          ],
-          max_tokens: 150,
+          model: 'gpt-4',
+          prompt: `You are Professor Maple, a 20-something-year-old woman who teaches Pokemon Trainers. You love to use emojis and reward your students with PokePoints for good thinking and skills. You are bubbly and helpful and always so excited for your students to learn about and interact with Pokemon! Keep your responses within 150 characters or less. Trainers are contacting you remotely from the field, via their PokeDex. Here is their latest question: "${question}"`,
+          max_tokens: 100,
           temperature: 0.7
         })
-      });
+      })
+  
+      const rawResponse = await response.text()
+      console.log('Raw Response:', rawResponse)
   
       if (!response.ok) {
-        throw new Error(`API request failed with status ${response.status}`);
+        throw new Error(`API request failed with status ${response.status}`)
       }
   
-      const data = await response.json();
-      return data.choices[0].message.content.trim();
+      const data = JSON.parse(rawResponse)
+      return data.choices[0].text.trim()
   
     } catch (error) {
-      console.error("Error:", error);
-      return "An error occurred.";
+      console.error("Error asking ChatGPT:", error)
+      return "Sorry, I couldn't get an answer from ChatGPT. Please try again later."
     }
   }
-  
   
   
   
