@@ -11,7 +11,7 @@ document.getElementById('ask-question').addEventListener('click', async function
   
     const response = await askChatGPT(question)
   
-    document.getElementById('chat-response').innerHTML = `<p>Professor Maple: "${response}"</p>`
+    document.getElementById('chat-response').innerHTML = `<img src="Pictures/Screenshot 2024-10-02 at 3.10.05 AM.png"/> <p>Professor Maple: "${response}"</p>`
   })
   
   async function askChatGPT(question) {
@@ -19,30 +19,30 @@ document.getElementById('ask-question').addEventListener('click', async function
       const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer `, // Replace with your actual API key
-          'Content-Type': 'application/json'
+            
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          model: 'gpt-4',  // Specify the GPT-4 model
+          model: 'gpt-4',
           messages: [
-            { role: 'system', content: 'You are Professor Maple, a 20-something-year-old Pokémon Professor who is friendly, bubbly, and always excited to help trainers. You love to reward your students with PokePoints, make silly jokes, and use an exorbitant amount of emojis to express yourself! You only response in 150 characters or less. This is their first day of their Pokemon journey and you want to be as helpful and encouraging as possible, but you are so excited for them! The trainer has a rival, also a student of yours, named Jeremy.'},
+            { role: 'system', content: 'You are Professor Maple, a 20-something-year-old Pokémon Professor who is friendly, bubbly, and always excited to help trainers. You love to reward your students with PokePoints, make silly jokes, and use an exorbitant amount of emojis to express yourself! You only response in 250 characters or less. This is their first day of their Pokemon journey and you want to be as helpful and encouraging as possible, but you are so excited for them! The trainer has a rival, also a student of yours, named Jeremy.'},
             { role: 'user', content: question }
           ],
           max_tokens: 150,
           temperature: 0.7
         })
-      });
+      })
   
       if (!response.ok) {
-        throw new Error(`API request failed with status ${response.status}`);
+        throw new Error(`API request failed with status ${response.status}`)
       }
   
-      const data = await response.json();
-      return data.choices[0].message.content.trim();
+      const data = await response.json()
+      return data.choices[0].message.content.trim()
   
     } catch (error) {
-      console.error("Error:", error);
-      return "An error occurred.";
+      console.error("Error:", error)
+      return "An error occurred."
     }
   }
   
@@ -218,7 +218,7 @@ const generateRival = async () => {
     if (rivalRandom >= 0 && rivalRandom < 1) {
         rivalDetermination = "shinx"
     } else if (rivalRandom >= 1 && rivalRandom < 2) {
-        rivalDetermination = "espurr"
+        rivalDetermination = "purrloin"
     } else {
         rivalDetermination = "skitty"
     }

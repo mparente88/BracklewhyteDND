@@ -20,13 +20,19 @@ button:hover {
     cursor: pointer;
 }
 
-
 #optnsContainer {
     display:flex;
     justify-content: space-between;
     height: 45px;
     width: 35%;
-    margin-left: 2%;
+    margin-left: -20%;
+}
+
+@media screen and (min-width: 500px) {
+    #optnsContainer {
+
+        margin-left: 2%;
+    }
 }
 
 #optionsContainer > button {
@@ -131,22 +137,24 @@ button:hover {
     }
 }
 
-
 body {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-image: url('Pictures/backgroundPikachu.jpg');
-    background-size: cover;
-    background-position: center;
-    
-    margin: 0;
+    background-image: url('Pictures/pokedex_phone_wallpaper_by_drboxhead_dcrrow9-fullview.jpg');
+    background-size: contain;
+    margin-top: 20px;
+    align-content: center;
+    width: 100%;
+    margin-left: 15%;
+    margin-right:15%;
 }
 
 @media screen and (min-width: 500px) {
     body {
         width: 100%;
+        margin-left: 0px;
     }
 }
 
@@ -206,6 +214,12 @@ body {
     flex-direction: row;
 }
 
+#opponentSprite {
+    margin-left: 300px;
+    filter: hue-rotate(100deg) brightness(0.6) saturate(1.5);
+    width:80px;
+}
+
 @media screen and (min-width: 500px) {
     #pokeAndBPContainer {
         width: 450px;
@@ -215,12 +229,13 @@ body {
     #restartButton {
         width: 250px;
     }
-}
-#opponentSprite {
-    width:80px;
+    
+    #opponentSprite {
     margin-left: 550px;   
-    filter: hue-rotate(100deg) brightness(0.6) saturate(1.5);
+
 }
+}
+
 
 #opponentStatBlock {
     text-align: right;
@@ -321,6 +336,12 @@ body {
     text-align: left;
     font-size: 14px;
     box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  #chat-response >img {
+    display:flex;
+    width:100px;
+    filter: hue-rotate(65deg) brightness(0.6) saturate(2);
+    border: solid #ffffff 5px;
   }
 
 /* Hide all closed screens and elements within them. 
