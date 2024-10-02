@@ -19,7 +19,7 @@ document.getElementById('ask-question').addEventListener('click', async function
       const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer sk-pzXB07SSN0-N8QlJ1FdMIiHmh-iI9uuqOi_w6un1jVT3BlbkFJ379mJpBQP5Fa4Vjkj4kmU4FZObbWRAnnTXH1CWtFUA`, // Replace with your actual API key
+          'Authorization': `Bearer `, // Replace with your actual API key
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
