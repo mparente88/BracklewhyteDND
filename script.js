@@ -20,7 +20,7 @@ document.getElementById('ask-question').addEventListener('click', async function
         method: 'POST',
         headers: {
             
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           model: 'gpt-4',
@@ -535,6 +535,9 @@ fightButtonElement.addEventListener('click', async () => {
     const pokemon = pokemonStorage.find(pokemon => pokemon.Pownership === true)
     const opponent = pokemonStorage.find(pokemon => pokemon.Rownership === true)
     dialoguePicContainer.classList.remove(`inactive`)
+    yamperHighlightElement.classList.add(`inactive`)
+    lillipupHighlightElement.classList.add(`inactive`)
+    rockruffHighlightElement.classList.add(`inactive`)
     textBoxElement.innerText = `You encounter your rival, Jeremy, and his pokemon, ${opponent.name.toUpperCase()}!`
     setTimeout(() => {
         if (fighting) {
@@ -545,15 +548,13 @@ fightButtonElement.addEventListener('click', async () => {
 })
 
 
-//Select Yamper for your starter
+//mouseover to see Yamper details
 yamperSelectElement.addEventListener(`mouseover`, () => {
+    rockruffHighlightElement.classList.add(`inactive`)
+    lillipupHighlightElement.classList.add(`inactive`)
     yamperHighlightElement.classList.remove(`inactive`)
 })
-
-yamperSelectElement.addEventListener(`mouseout`, () => {
-    yamperHighlightElement.classList.add(`inactive`)
-})
-
+//Select Yamper for your starter
 yamperSelectElement.addEventListener(`click`, () => {
     let audioUrl = "Sound Effects/click-buttons-ui-menu-sounds-effects-button-7-203601.mp3"
     let audio = new Audio(audioUrl)
@@ -568,15 +569,14 @@ yamperSelectElement.addEventListener(`click`, () => {
     nameYourStarterElement.classList.remove(`inactive`)
 })
 
-//Select Lillipup for your starter
+//mouseover to see Yamper details
 lillipupSelectElement.addEventListener(`mouseover`, () => {
+    yamperHighlightElement.classList.add(`inactive`)
+    rockruffHighlightElement.classList.add(`inactive`)
     lillipupHighlightElement.classList.remove(`inactive`)
 })
 
-lillipupSelectElement.addEventListener(`mouseout`, () => {
-    lillipupHighlightElement.classList.add(`inactive`)
-})
-
+//Select Yamper for your starter
 lillipupSelectElement.addEventListener(`click`, () => {
     let audioUrl = "Sound Effects/click-buttons-ui-menu-sounds-effects-button-7-203601.mp3"
     let audio = new Audio(audioUrl)
@@ -591,15 +591,13 @@ lillipupSelectElement.addEventListener(`click`, () => {
     textBoxElement.innerText = `You have selected Lillipup!`
 })
 
-//Select Rockruff for your starter
+//Mouseover to see Rockruff details
 rockruffSelectElement.addEventListener(`mouseover`, () => {
+    lillipupHighlightElement.classList.add(`inactive`)
+    yamperHighlightElement.classList.add(`inactive`)
     rockruffHighlightElement.classList.remove(`inactive`)
 })
-
-rockruffSelectElement.addEventListener(`mouseout`, () => {
-    rockruffHighlightElement.classList.add(`inactive`)
-})
-
+//Select Rockruff for your starter
 rockruffSelectElement.addEventListener(`click`, () => {
     let audioUrl = "Sound Effects/click-buttons-ui-menu-sounds-effects-button-7-203601.mp3"
     let audio = new Audio(audioUrl)
@@ -662,8 +660,11 @@ const generatePokemon = async (species, ownership) => {
     await generateSPATK(search, pokemonNature)
     await generateSPDEF(search, pokemonNature)
     await generateSPD(search, pokemonNature)
-    await sendToStorage()
-    await getPlayer(search)
+    sendToStorage()
+    if (ownership === "player") {
+        getPlayer(search)
+
+    }
     console.log(pokemonStorage)
 }
 
@@ -969,7 +970,8 @@ const typeAdvantage = {
     }
 }
 
-
+//Update the volume of currently playing sounds when slider
+//is interacted with.
 const updateVolume = () => {
     const audios = document.querySelectorAll('audio')
     const volumeValue = parseFloat(volumeSliderElement.value)
@@ -991,5 +993,7 @@ restartButtonElement.addEventListener(`click`, () => {
     audio.play()
     startGame()
 })
+
+//Start the game after all of the scripts load
 
 startGame()

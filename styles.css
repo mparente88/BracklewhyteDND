@@ -30,7 +30,6 @@ button:hover {
 
 @media screen and (min-width: 500px) {
     #optnsContainer {
-
         margin-left: 2%;
     }
 }
@@ -113,14 +112,14 @@ button:hover {
     }
   }
   
-#titleScreenContainer > img {
+#titleScreenContainer > button > img {
     transition: filter 0.3s ease;
-  }
-  
-#titleScreenContainer > img:hover {
+}
+
+#titleScreenContainer > button:hover > img {
     animation: flickerFilter 0.5s infinite;
-  }
-  
+}
+
 #dialoguePic {
     filter: hue-rotate(75deg) brightness(.6) saturate(2) contrast(1.3);
     width: 100px;
@@ -143,18 +142,18 @@ body {
     justify-content: center;
     align-items: center;
     background-image: url('Pictures/pokedex_phone_wallpaper_by_drboxhead_dcrrow9-fullview.jpg');
-    background-size: contain;
+    background-size: cover;
     margin-top: 20px;
     align-content: center;
     width: 100%;
-    margin-left: 15%;
-    margin-right:15%;
 }
 
 @media screen and (min-width: 500px) {
     body {
         width: 100%;
         margin-left: 0px;
+        background-image: url('Pictures/wp8813120.webp');
+    
     }
 }
 
@@ -305,7 +304,6 @@ body {
     outline: none;
 }
   
-  /* Styling for the "Ask" button */
   #ask-question {
     background-color: #008230;
     color: #ffffff;
@@ -321,7 +319,7 @@ body {
     background-color: #00b140;
   }
   
-  /* Chat response container */
+
   #chat-response {
     margin-top: 20px;
     margin-bottom: 20px;
@@ -331,12 +329,12 @@ body {
     border-width: 5px;
     border-color: #00b140;
     color: #ffffff;
-    width: 100%;
+    width: 85%;
     min-height: 50px;
     text-align: left;
     font-size: 14px;
-    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.1);
   }
+
   #chat-response >img {
     display:flex;
     width:100px;

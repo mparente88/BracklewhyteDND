@@ -27,4 +27,4 @@ Pokémon is owned by Nintendo.
 
 Pokémon: Rivals is made and maintained by Molly Parente.
 
-Rivals! title screen made by ChatGPT.
+ChatGPT integration, unofficial artwork and Rivals! title screen made by ChatGPT.
