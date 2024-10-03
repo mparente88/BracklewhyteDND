@@ -19,6 +19,7 @@ async function askChatGPT(question) {
       const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
+            'Authorization': `Bearer sk-ibbrpDto1D6rz1adPxj8ePT6VU8fKDfiYrY7QhIP1MT3BlbkFJs6isuTbPm8wcGx4OBkWoDC5Z-qmIm4EJYEO7GDCiUA`,
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -44,11 +45,6 @@ async function askChatGPT(question) {
       return "An error occurred."
     }
   }
-  
-  
-  
-  
-
 
 //Gather HTML elements
 const titleScreenElement = document.querySelector(`#titleScreen`)
@@ -85,7 +81,10 @@ const rockruffHighlightElement = document.querySelector(`#rockruffHighlight`)
 const lillipupHighlightElement = document.querySelector(`#lillipupHighlight`)
 const yamperHighlightElement = document.querySelector(`#yamperHighlight`)
 const dialoguePicContainerElement = document.querySelector(`#dialoguePicContainer`)
+const dialoguePicElement = document.querySelector(`#dialoguePic`)
 let fighting = false
+let randomPlayer = ""
+let randomOpponent = ""
 
 // This is the input for a pokemon that is currently being built
 // generatePokemon() fills this in and then it'll get pushed off
@@ -265,13 +264,22 @@ const enterStart = () => {
 // Input player/opponent to start fight between them.
 //Enter "random" for opponent to generate new.
 
-const initiateFight = (player, opponent) => {
-
+const initiateFight = async (player, opponent) => {
+    console.log(playerPokemon)
+    console.log(opponentPokemon)
     fighting = true
 
+    if (player === "random") {
+        await generatePokemon("random", "player")
+        getPlayer(randomPlayer)
+    }
+    if (opponent === "random") {
+        await generatePokemon("random", "rival")
+        getOpponent(randomOpponent)
+    } else {
     getPlayer(player)
     getOpponent(opponent)
-
+    }
     playerName = playerPokemon[0].name
     playerType1 = playerPokemon[0].type1
     playerType2 = playerPokemon[0].type2
@@ -560,7 +568,7 @@ fightButtonElement.addEventListener('click', async () => {
 
 fight2ButtonElement.addEventListener(`click`, async () => {
     let audio4Url = "Sound Effects/1-05. Your Rival Appears.mp3"
-    let audio4 = new Audio(audio3Url)
+    let audio4 = new Audio(audio4Url)
         
     audio4.volume = parseFloat(volumeSliderElement.value)
     audio4.play()
@@ -572,33 +580,51 @@ fight2ButtonElement.addEventListener(`click`, async () => {
     
     let opponent = randomizeOpponent()
 
+    if (opponent === "Ashley") {
+        dialoguePicElement.setAttribute(`src`, `Pictures/AshleyPic.webp`)
+    } else if (opponent === "Aisha") {
+        dialoguePicElement.setAttribute(`src`, `Pictures/AishaPic.webp`)
+    } else if (opponent === "Brittany") {
+        dialoguePicElement.setAttribute(`src`, `Pictures/BrittanyPic.webp`)
+    } else {
+        dialoguePicElement.setAttribute(`src`, `Pictures/TomPic.webp`)
+    }
+
     dialoguePicContainer.classList.remove(`inactive`)
     yamperHighlightElement.classList.add(`inactive`)
     lillipupHighlightElement.classList.add(`inactive`)
     rockruffHighlightElement.classList.add(`inactive`)
-    textBoxElement.innerText = `You encounter your rival, Jeremy, and his pokemon, ${opponent.name.toUpperCase()}!`
+    textBoxElement.innerText = `You encounter Trainer ${opponent}!`
     setTimeout(() => {
-        if (fighting) {
-            textBoxElement.innerText = `Jeremy: "Just give up. You'll never beat me with that pathetic ${pokemon.species}!"`
+        if (fighting && opponent === "Ashley") {
+            textBoxElement.innerText = `${opponent}: Dattebayo!`
+        } else if (fighting && opponent === "Aisha") {
+            textBoxElement.innerText = `${opponent}: Great job on your homework, but that won't save you now!`
+        } else if (fighting && opponent == "Brittany") {
+            textBoxElement.innerText = `${opponent}: Did you see that concert last night?`
+        } else {
+            textBoxElement.innerText = `${opponent}: Post your name to the thread for a butt kicking!`
         }
     }, 5500)
-    initiateFight(pokemon.name, opponent.name)
+    initiateFight("random", "random")
 })
 
 const randomizeOpponent = () => {
     let opponent = "Tom"
 
     let opponentDetermination = Math.random()
-
-    if (opponentDetermination >= .25) {
+    console.log(`Your opponent random number is: ${opponentDetermination}`)
+    if (opponentDetermination <= .25) {
         opponent = "Ashley"
-    } else if (opponentDetermination >= .5) {
+    } else if (opponentDetermination <= .5) {
         opponent = "Aisha"
-    } else if (opponentDetermination >= .75) {
+    } else if (opponentDetermination <= .75) {
         opponent = "Brittany"
     } else {
         opponent = "Tom"
-    } return opponent
+    } 
+    console.log(`So your opponent is: ${opponent}`)
+    return opponent
 }
 
 //mouseover to see Yamper details
@@ -668,16 +694,39 @@ rockruffSelectElement.addEventListener(`click`, () => {
 //Pull a Pokemon's stats from the API and put into storage
 const generatePokemon = async (species, ownership) => {
     pokemonNature = determineNature()
-    
+
+    let randomPokemon = "bulbasaur"
+
     let search = species
 
     if (species === "random") {
-        search = Math.random() * 1000
+        search = Math.floor(Math.random() * 625)
     }
 
-    response = await axios.get (
+    response1 = await axios.get (
         `https://pokeapi.co/api/v2/pokemon/${search}/`
     )
+
+    if (species === "random") {
+        randomPokemon = response1.data.species.name
+        search = response1.data.species.name
+        if (ownership === "player") {
+            randomPlayer = response1.data.species.name
+        } else {
+            randomOpponent = response1.data.species.name
+        }
+    }
+
+    if (species === "random") {
+        response = await axios.get (
+            `https://pokeapi.co/api/v2/pokemon/${randomPokemon}/`
+        )
+    } else {
+        response = await axios.get (
+            `https://pokeapi.co/api/v2/pokemon/${search}/`
+        )
+    }
+
     console.log(response)
     if (ownership === "player") {
         playerOwned = true
@@ -905,7 +954,7 @@ const generateSPD = async (species, nature) => {
 const determineNature = () => {
     const randomNature = naturesArray[Math.floor(Math.random() * naturesArray.length)];
     return randomNature
-  };
+}
 //Nature Array
 const naturesArray = [
     "Adamant", "Bashful", "Bold", "Brave", "Calm",
@@ -1032,6 +1081,7 @@ const updateVolume = () => {
         audio.volume = volumeValue
     })
 }
+
 
 //Restart button to restart all values and screens
 
