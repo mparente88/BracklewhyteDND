@@ -14,18 +14,17 @@ document.getElementById('ask-question').addEventListener('click', async function
     document.getElementById('chat-response').innerHTML = `<img src="Pictures/Screenshot 2024-10-02 at 3.10.05 AM.png"/> <p>Professor Maple: "${response}"</p>`
   })
   
-  async function askChatGPT(question) {
+async function askChatGPT(question) {
     try {
       const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
-            
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           model: 'gpt-4',
           messages: [
-            { role: 'system', content: 'You are Professor Maple, a 20-something-year-old Pokémon Professor who is friendly, bubbly, and always excited to help trainers. You love to reward your students with PokePoints, make silly jokes, and use an exorbitant amount of emojis to express yourself! You only response in 250 characters or less. This is their first day of their Pokemon journey and you want to be as helpful and encouraging as possible, but you are so excited for them! The trainer has a rival, also a student of yours, named Jeremy.'},
+            { role: 'system', content: 'You are Professor Maple, a 20-something-year-old Pokémon Professor who is friendly, bubbly, and always excited to help trainers. You love to reward your students with PokePoints, make silly jokes, give out gold stars and use an exorbitant amount of emojis to express yourself! You only respond in 250 characters or less. This is their first day of their Pokemon journey and you want to be as helpful and encouraging as possible, but you are so excited for them! The trainer has a rival, also a student of yours, named Jeremy, and he is sometimes a snarky jerk! He likes cat pokemon. Today, you gave the Trainer their first pokemon, a dog type, their choice of a Rockruff, Yamper or Lillipup.'},
             { role: 'user', content: question }
           ],
           max_tokens: 150,
@@ -68,6 +67,7 @@ const nameYourStarterElement = document.querySelector(`#nameYourStarter`)
 const nameInputElement = document.querySelector(`#nameInput`)
 const fightButtonContainerElement = document.querySelector(`#fightButtonContainer`)
 const fightButtonElement = document.querySelector(`#fightButton`)
+const fight2ButtonElement = document.querySelector(`#fight2Button`)
 const fightWindowElement = document.querySelector(`#fightWindow`)
 const opponentSpriteContainerElement = document.querySelector(`#opponentSpriteContainer`)
 const opponentSpriteElement = document.querySelector(`#opponentSprite`)
@@ -84,6 +84,7 @@ const volumeSliderElement = document.querySelector(`#volumeSlider`)
 const rockruffHighlightElement = document.querySelector(`#rockruffHighlight`)
 const lillipupHighlightElement = document.querySelector(`#lillipupHighlight`)
 const yamperHighlightElement = document.querySelector(`#yamperHighlight`)
+const dialoguePicContainerElement = document.querySelector(`#dialoguePicContainer`)
 let fighting = false
 
 // This is the input for a pokemon that is currently being built
@@ -167,6 +168,7 @@ const startGame = () => {
     fightButtonContainerElement.classList.add(`inactive`)
     selectionCongratsElement.classList.add(`inactive`)
     fightOptnsContainerElement.classList.add(`inactive`)
+    dialoguePicContainerElement.classList.add(`inactive`)    
     pokemonStorage = []
     pokemonName = "Unknown Starter"
     pokemonSpecies = "Unknown Starter"
@@ -404,6 +406,12 @@ const runAttackRound = () => {
     
 }
 
+//Reset the game is the player clicks Flee
+
+fleeBtnElement.addEventListener(`click`, () => {
+    startGame()
+})
+
 //x2 multiplier for type advantage, 0.5 multiplier for disadvantage
 
 const compareTypes = (attackingTypes, defendingTypes) => {
@@ -493,6 +501,10 @@ const endFight = (winner) => {
             }, 12000)
         }
 
+        setTimeout(() => {
+            textBoxElement.innerText = `${playerPokemon[0].name} is done leveling up!`
+        }, 14000)
+
     } else if (winner === "rival") {
         textBoxElement.innerText = `Jeremy wins!`
         setTimeout(() => {
@@ -517,7 +529,6 @@ window.onload = () => {
         audio.volume = parseFloat(volumeSliderElement.value)
     })
 }
-
 
 //Fight button for the first rival fight, initiating the game
 fightButtonElement.addEventListener('click', async () => {
@@ -547,6 +558,48 @@ fightButtonElement.addEventListener('click', async () => {
     initiateFight(pokemon.name, opponent.name)
 })
 
+fight2ButtonElement.addEventListener(`click`, async () => {
+    let audio4Url = "Sound Effects/1-05. Your Rival Appears.mp3"
+    let audio4 = new Audio(audio3Url)
+        
+    audio4.volume = parseFloat(volumeSliderElement.value)
+    audio4.play()
+    
+    volumeSliderElement.addEventListener('input', () => {
+        audio4.volume = parseFloat(volumeSliderElement.value)
+    })
+    updateVolume()
+    
+    let opponent = randomizeOpponent()
+
+    dialoguePicContainer.classList.remove(`inactive`)
+    yamperHighlightElement.classList.add(`inactive`)
+    lillipupHighlightElement.classList.add(`inactive`)
+    rockruffHighlightElement.classList.add(`inactive`)
+    textBoxElement.innerText = `You encounter your rival, Jeremy, and his pokemon, ${opponent.name.toUpperCase()}!`
+    setTimeout(() => {
+        if (fighting) {
+            textBoxElement.innerText = `Jeremy: "Just give up. You'll never beat me with that pathetic ${pokemon.species}!"`
+        }
+    }, 5500)
+    initiateFight(pokemon.name, opponent.name)
+})
+
+const randomizeOpponent = () => {
+    let opponent = "Tom"
+
+    let opponentDetermination = Math.random()
+
+    if (opponentDetermination >= .25) {
+        opponent = "Ashley"
+    } else if (opponentDetermination >= .5) {
+        opponent = "Aisha"
+    } else if (opponentDetermination >= .75) {
+        opponent = "Brittany"
+    } else {
+        opponent = "Tom"
+    } return opponent
+}
 
 //mouseover to see Yamper details
 yamperSelectElement.addEventListener(`mouseover`, () => {
@@ -611,7 +664,6 @@ rockruffSelectElement.addEventListener(`click`, () => {
     nameYourStarterElement.classList.remove(`inactive`)
     textBoxElement.innerText = `You have selected Rockruff!`
 })
-
 
 //Pull a Pokemon's stats from the API and put into storage
 const generatePokemon = async (species, ownership) => {

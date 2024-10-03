@@ -201,6 +201,14 @@ body {
     background-color: #008230;
 }
 
+#fightOptnsContainer > button {
+    background-color:#005620;
+}
+
+#fightOptnsContainer > button:hover {
+    background-color: #008230;
+}
+
 #selectionCongrats {
     width: 100%;
     overflow:auto;
@@ -253,6 +261,19 @@ body {
 
 #playerStatBlock {
     text-align: left;
+}
+
+#fightButtonContainer {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    width:35%;
+    align-items: center;
+}
+
+#fightButtonContainer > button {
+    margin-top: 10px;
+    height: 50px;
 }
 
 #fightOptnsContainer {
