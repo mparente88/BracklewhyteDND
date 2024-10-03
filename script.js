@@ -562,21 +562,6 @@ const endFight = (winner) => {
     }
 }
 
-//Play title music when the page loads
-
-window.onload = () => {
-    
-    let audioUrl = "Sound Effects/titleTheme.mp3"
-    let audio = new Audio(audioUrl)
-
-    audio.volume = parseFloat(volumeSliderElement.value)
-    audio.play()
-
-    volumeSliderElement.addEventListener('input', () => {
-        audio.volume = parseFloat(volumeSliderElement.value)
-    })
-}
-
 //Fight button for the first rival fight, initiating the game
 
 fightButtonElement.addEventListener('click', async () => {
