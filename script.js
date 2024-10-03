@@ -19,13 +19,12 @@ async function askChatGPT(question) {
       const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
-            'Authorization': `Bearer sk-ibbrpDto1D6rz1adPxj8ePT6VU8fKDfiYrY7QhIP1MT3BlbkFJs6isuTbPm8wcGx4OBkWoDC5Z-qmIm4EJYEO7GDCiUA`,
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           model: 'gpt-4',
           messages: [
-            { role: 'system', content: 'You are Professor Maple, a 20-something-year-old Pokémon Professor who is friendly, bubbly, and always excited to help trainers. You love to reward your students with PokePoints, make silly jokes, give out gold stars and use an exorbitant amount of emojis to express yourself! You only respond in 250 characters or less. This is their first day of their Pokemon journey and you want to be as helpful and encouraging as possible, but you are so excited for them! The trainer has a rival, also a student of yours, named Jeremy, and he is sometimes a snarky jerk! He likes cat pokemon. Today, you gave the Trainer their first pokemon, a dog type, their choice of a Rockruff, Yamper or Lillipup.'},
+            { role: 'system', content: 'You are Professor Maple, a 20-something-year-old Pokémon Professor who is friendly, bubbly, and always excited to help trainers. You love to reward your students with PokePoints, make silly jokes, give out gold stars and use an exorbitant amount of emojis to express yourself! You only respond in 250 characters or less. This is their first day of their Pokemon journey and you want to be as helpful and encouraging as possible, but you are so excited for them! The trainer has a rival, also a student of yours, named Jeremy, and he is sometimes a snarky jerk! He likes cat pokemon. Today, you gave the Trainer their first pokemon, a dog type, their choice of a Rockruff, Yamper or Lillipup. The Trainer also has 4 gym leaders to defeat, named Ashley, Aisha, Brittany and Tom. Once they defeat the four trainers and Jeremy, they graduate Pokemon Rival school. When they fight the gym leaders, both they and the gym leader will get a random pokemon to fight with. When they fight Jeremy, they use their first pokemon against his.'},
             { role: 'user', content: question }
           ],
           max_tokens: 150,
@@ -47,6 +46,7 @@ async function askChatGPT(question) {
   }
 
 //Gather HTML elements
+
 const titleScreenElement = document.querySelector(`#titleScreen`)
 const optnsContainerElement = document.querySelector(`#optnsContainer`)
 const restartButtonElement = document.querySelector(`#restartButton`)
@@ -64,6 +64,10 @@ const nameInputElement = document.querySelector(`#nameInput`)
 const fightButtonContainerElement = document.querySelector(`#fightButtonContainer`)
 const fightButtonElement = document.querySelector(`#fightButton`)
 const fight2ButtonElement = document.querySelector(`#fight2Button`)
+const fight3ButtonElement = document.querySelector(`#fight3Button`)
+const fight4ButtonElement = document.querySelector(`#fight4Button`)
+const fight5ButtonElement = document.querySelector(`#fight5Button`)
+const fight6ButtonElement = document.querySelector(`#fight6Button`)
 const fightWindowElement = document.querySelector(`#fightWindow`)
 const opponentSpriteContainerElement = document.querySelector(`#opponentSpriteContainer`)
 const opponentSpriteElement = document.querySelector(`#opponentSprite`)
@@ -85,21 +89,26 @@ const dialoguePicElement = document.querySelector(`#dialoguePic`)
 let fighting = false
 let randomPlayer = ""
 let randomOpponent = ""
+let opponentTrainer = ""
 
 // This is the input for a pokemon that is currently being built
 // generatePokemon() fills this in and then it'll get pushed off
 // to an object
 
 //Empty Array for all generated Pokemon
+
 let pokemonStorage = []
 
 //Empty Array for Pokemon available to player during fight
+
 let playerPokemon = []
 
 //Empty Array for Pokemon available to opponent during fight
+
 let opponentPokemon = []
 
 //Empty variables for Pokemon generation before pushing to storage
+
 let pokemonName = "Unknown Starter"
 let pokemonSpecies = "Unknown Starter"
 let pokemonType1 = "normal"
@@ -119,6 +128,7 @@ let rivalOwned = false
 let wildOwned = false
 
 //Empty variables for current fighting player-side Pokemon
+
 let playerName = "Unknown Starter"
 let playerType1 = "normal"
 let playerType2 = "none"
@@ -438,6 +448,7 @@ const compareTypes = (attackingTypes, defendingTypes) => {
 }
 
 //Take pokemon from storage and put into player-specific storage
+
 const getPlayer = (name) => {
     const pokemon = pokemonStorage.find(pokemon => pokemon.name === name);
     playerPokemon = []
@@ -446,6 +457,7 @@ const getPlayer = (name) => {
 }
 
 //Take pokemon from storage and put into opponent-specific storage
+
 const getOpponent = (name) => {
     const pokemon = pokemonStorage.find(pokemon => pokemon.name === name);
     opponentPokemon = []
@@ -514,17 +526,44 @@ const endFight = (winner) => {
         }, 14000)
 
     } else if (winner === "rival") {
-        textBoxElement.innerText = `Jeremy wins!`
-        setTimeout(() => {
-            dialoguePicContainer.classList.remove(`inactive`)
-            textBoxElement.innerText = `Jeremy: Ha! Better luck next time!`
-        }, 5000)
+        if (opponentTrainer === "Jeremy") {
+            textBoxElement.innerText = `Jeremy wins!`
+            setTimeout(() => {
+                dialoguePicContainerElement.classList.remove(`inactive`)
+                textBoxElement.innerText = `Jeremy: Ha! Better luck next time!`
+            }, 5000)
+        } else if (opponentTrainer === "Ashley") {
+            textBoxElement.innerText = `Gym Leader Ashley wins!`
+            setTimeout(() => {
+                dialoguePicContainerElement.classList.remove(`inactive`)
+                textBoxElement.innerText = `Ashley: Hard work is worthless for those that don't believe in themselves!`
+            }, 5000)
+        } else if (opponentTrainer === "Aisha") {
+            textBoxElement.innerText = `Gym Leader Aisha wins!`
+            setTimeout(() => {
+                dialoguePicContainerElement.classList.remove(`inactive`)
+                textBoxElement.innerText = `Aisha: Need an extension on effort?`
+            }, 5000) 
+        } else if (opponentTrainer === "Brittany") {
+            textBoxElement.innerText = `Gym Leader Brittany wins!`
+            setTimeout(() => {
+                dialoguePicContainerElement.classList.remove(`inactive`)
+                textBoxElement.innerText = `Brittany: You getting stomped is music to my ears!`
+            }, 5000)
+        } else {
+            textBoxElement.innerText = `Gym Leader Tom wins!`
+            setTimeout(() => {
+                dialoguePicContainerElement.classList.remove(`inactive`)
+                textBoxElement.innerText = `Tom: Office hours are closed.`
+            }, 5000)
+        }
     } else {
         textBoxElement.innerText = "You lose!"
     }
 }
 
 //Play title music when the page loads
+
 window.onload = () => {
     
     let audioUrl = "Sound Effects/titleTheme.mp3"
@@ -539,6 +578,7 @@ window.onload = () => {
 }
 
 //Fight button for the first rival fight, initiating the game
+
 fightButtonElement.addEventListener('click', async () => {
     let audio3Url = "Sound Effects/1-05. Your Rival Appears.mp3"
     let audio3 = new Audio(audio3Url)
@@ -551,6 +591,8 @@ fightButtonElement.addEventListener('click', async () => {
     })
     updateVolume()
     
+    opponentTrainer = "Jeremy"
+
     const pokemon = pokemonStorage.find(pokemon => pokemon.Pownership === true)
     const opponent = pokemonStorage.find(pokemon => pokemon.Rownership === true)
     dialoguePicContainer.classList.remove(`inactive`)
@@ -566,8 +608,10 @@ fightButtonElement.addEventListener('click', async () => {
     initiateFight(pokemon.name, opponent.name)
 })
 
+//Fight button for a random fight, initiating the game
+
 fight2ButtonElement.addEventListener(`click`, async () => {
-    let audio4Url = "Sound Effects/1-05. Your Rival Appears.mp3"
+    let audio4Url = "Sound Effects/Battle! Gym Leader [8-bit VRC6] - Pokémon Sword and Shield.mp3"
     let audio4 = new Audio(audio4Url)
         
     audio4.volume = parseFloat(volumeSliderElement.value)
@@ -579,6 +623,8 @@ fight2ButtonElement.addEventListener(`click`, async () => {
     updateVolume()
     
     let opponent = randomizeOpponent()
+
+    opponentTrainer = opponent
 
     if (opponent === "Ashley") {
         dialoguePicElement.setAttribute(`src`, `Pictures/AshleyPic.webp`)
@@ -594,7 +640,7 @@ fight2ButtonElement.addEventListener(`click`, async () => {
     yamperHighlightElement.classList.add(`inactive`)
     lillipupHighlightElement.classList.add(`inactive`)
     rockruffHighlightElement.classList.add(`inactive`)
-    textBoxElement.innerText = `You encounter Trainer ${opponent}!`
+    textBoxElement.innerText = `You encounter Gym Leader ${opponent}!`
     setTimeout(() => {
         if (fighting && opponent === "Ashley") {
             textBoxElement.innerText = `${opponent}: Dattebayo!`
@@ -608,6 +654,156 @@ fight2ButtonElement.addEventListener(`click`, async () => {
     }, 5500)
     initiateFight("random", "random")
 })
+
+//Fight button for fighting Ashley, initiating the game
+
+fight3ButtonElement.addEventListener(`click`, async () => {
+    let audio4Url = "Sound Effects/Battle! Gym Leader [8-bit VRC6] - Pokémon Sword and Shield.mp3"
+    let audio4 = new Audio(audio4Url)
+        
+    audio4.volume = parseFloat(volumeSliderElement.value)
+    audio4.play()
+    
+    volumeSliderElement.addEventListener('input', () => {
+        audio4.volume = parseFloat(volumeSliderElement.value)
+    })
+    updateVolume()
+    
+    let opponent = "Ashley"
+
+    opponentTrainer = opponent
+
+    dialoguePicElement.setAttribute(`src`, `Pictures/AshleyPic.webp`)
+
+    dialoguePicContainer.classList.remove(`inactive`)
+    yamperHighlightElement.classList.add(`inactive`)
+    lillipupHighlightElement.classList.add(`inactive`)
+    rockruffHighlightElement.classList.add(`inactive`)
+    textBoxElement.innerText = `You encounter Gym Leader ${opponent}!`
+    setTimeout(() => {
+        if (fighting && opponent === "Ashley") {
+            textBoxElement.innerText = `${opponent}: Dattebayo!`
+        } else if (fighting && opponent === "Aisha") {
+            textBoxElement.innerText = `${opponent}: Great job on your homework, but that won't save you now!`
+        } else if (fighting && opponent == "Brittany") {
+            textBoxElement.innerText = `${opponent}: Did you see that concert last night?`
+        } else {
+            textBoxElement.innerText = `${opponent}: Post your name to the thread for a butt kicking!`
+        }
+    }, 5500)
+    initiateFight("random", "random")
+})
+
+//Fight button for fighting Aisha, initiating the game
+
+fight4ButtonElement.addEventListener(`click`, async () => {
+    let audio4Url = "Sound Effects/Battle! Gym Leader [8-bit VRC6] - Pokémon Sword and Shield.mp3"
+    let audio4 = new Audio(audio4Url)
+        
+    audio4.volume = parseFloat(volumeSliderElement.value)
+    audio4.play()
+    
+    volumeSliderElement.addEventListener('input', () => {
+        audio4.volume = parseFloat(volumeSliderElement.value)
+    })
+    updateVolume()
+    
+    let opponent = "Aisha"
+
+    opponentTrainer = opponent
+
+    dialoguePicElement.setAttribute(`src`, `Pictures/AishaPic.webp`)
+
+    dialoguePicContainer.classList.remove(`inactive`)
+    yamperHighlightElement.classList.add(`inactive`)
+    lillipupHighlightElement.classList.add(`inactive`)
+    rockruffHighlightElement.classList.add(`inactive`)
+    textBoxElement.innerText = `You encounter Gym Leader ${opponent}!`
+    setTimeout(() => {
+        if (fighting && opponent === "Ashley") {
+            textBoxElement.innerText = `${opponent}: Dattebayo!`
+        } else if (fighting && opponent === "Aisha") {
+            textBoxElement.innerText = `${opponent}: Great job on your homework, but that won't save you now!`
+        } else if (fighting && opponent == "Brittany") {
+            textBoxElement.innerText = `${opponent}: Did you see that concert last night?`
+        } else {
+            textBoxElement.innerText = `${opponent}: Post your name to the thread for a butt kicking!`
+        }
+    }, 5500)
+    initiateFight("random", "random")
+})
+
+//Fight button for fighting Brittany, initiating the game
+
+fight5ButtonElement.addEventListener(`click`, async () => {
+    let audio4Url = "Sound Effects/Battle! Gym Leader [8-bit VRC6] - Pokémon Sword and Shield.mp3"
+    let audio4 = new Audio(audio4Url)
+        
+    audio4.volume = parseFloat(volumeSliderElement.value)
+    audio4.play()
+    
+    volumeSliderElement.addEventListener('input', () => {
+        audio4.volume = parseFloat(volumeSliderElement.value)
+    })
+    updateVolume()
+    
+    let opponent = "Brittany"
+
+    opponentTrainer = opponent
+
+    dialoguePicElement.setAttribute(`src`, `Pictures/BrittanyPic.webp`)
+
+    dialoguePicContainer.classList.remove(`inactive`)
+    yamperHighlightElement.classList.add(`inactive`)
+    lillipupHighlightElement.classList.add(`inactive`)
+    rockruffHighlightElement.classList.add(`inactive`)
+    textBoxElement.innerText = `You encounter Gym Leader ${opponent}!`
+    setTimeout(() => {
+        if (fighting && opponent === "Ashley") {
+            textBoxElement.innerText = `${opponent}: Dattebayo!`
+        } else if (fighting && opponent === "Aisha") {
+            textBoxElement.innerText = `${opponent}: Great job on your homework, but that won't save you now!`
+        } else if (fighting && opponent == "Brittany") {
+            textBoxElement.innerText = `${opponent}: Did you see that concert last night?`
+        } else {
+            textBoxElement.innerText = `${opponent}: Post your name to the thread for a butt kicking!`
+        }
+    }, 5500)
+    initiateFight("random", "random")
+})
+
+//Fight button for fighting Tom, initiating the game
+
+fight6ButtonElement.addEventListener(`click`, async () => {
+    let audio4Url = "Sound Effects/Battle! Gym Leader [8-bit VRC6] - Pokémon Sword and Shield.mp3"
+    let audio4 = new Audio(audio4Url)
+        
+    audio4.volume = parseFloat(volumeSliderElement.value)
+    audio4.play()
+    
+    volumeSliderElement.addEventListener('input', () => {
+        audio4.volume = parseFloat(volumeSliderElement.value)
+    })
+    updateVolume()
+    
+    let opponent = "Tom"
+
+    opponentTrainer = opponent
+
+    dialoguePicElement.setAttribute(`src`, `Pictures/TomPic.webp`)
+
+    dialoguePicContainer.classList.remove(`inactive`)
+    yamperHighlightElement.classList.add(`inactive`)
+    lillipupHighlightElement.classList.add(`inactive`)
+    rockruffHighlightElement.classList.add(`inactive`)
+    textBoxElement.innerText = `You encounter Gym Leader ${opponent}!`
+    setTimeout(() => {
+            textBoxElement.innerText = `${opponent}: Post your name to the thread for a butt kicking!`
+    }, 5500)
+    initiateFight("random", "random")
+})
+
+//Randomize which trainer you fight in a random battle
 
 const randomizeOpponent = () => {
     let opponent = "Tom"
@@ -628,12 +824,15 @@ const randomizeOpponent = () => {
 }
 
 //mouseover to see Yamper details
+
 yamperSelectElement.addEventListener(`mouseover`, () => {
     rockruffHighlightElement.classList.add(`inactive`)
     lillipupHighlightElement.classList.add(`inactive`)
     yamperHighlightElement.classList.remove(`inactive`)
 })
+
 //Select Yamper for your starter
+
 yamperSelectElement.addEventListener(`click`, () => {
     let audioUrl = "Sound Effects/click-buttons-ui-menu-sounds-effects-button-7-203601.mp3"
     let audio = new Audio(audioUrl)
@@ -649,6 +848,7 @@ yamperSelectElement.addEventListener(`click`, () => {
 })
 
 //mouseover to see Yamper details
+
 lillipupSelectElement.addEventListener(`mouseover`, () => {
     yamperHighlightElement.classList.add(`inactive`)
     rockruffHighlightElement.classList.add(`inactive`)
@@ -656,6 +856,7 @@ lillipupSelectElement.addEventListener(`mouseover`, () => {
 })
 
 //Select Yamper for your starter
+
 lillipupSelectElement.addEventListener(`click`, () => {
     let audioUrl = "Sound Effects/click-buttons-ui-menu-sounds-effects-button-7-203601.mp3"
     let audio = new Audio(audioUrl)
@@ -671,12 +872,15 @@ lillipupSelectElement.addEventListener(`click`, () => {
 })
 
 //Mouseover to see Rockruff details
+
 rockruffSelectElement.addEventListener(`mouseover`, () => {
     lillipupHighlightElement.classList.add(`inactive`)
     yamperHighlightElement.classList.add(`inactive`)
     rockruffHighlightElement.classList.remove(`inactive`)
 })
+
 //Select Rockruff for your starter
+
 rockruffSelectElement.addEventListener(`click`, () => {
     let audioUrl = "Sound Effects/click-buttons-ui-menu-sounds-effects-button-7-203601.mp3"
     let audio = new Audio(audioUrl)
@@ -692,6 +896,7 @@ rockruffSelectElement.addEventListener(`click`, () => {
 })
 
 //Pull a Pokemon's stats from the API and put into storage
+
 const generatePokemon = async (species, ownership) => {
     pokemonNature = determineNature()
 
@@ -770,6 +975,7 @@ const generatePokemon = async (species, ownership) => {
 }
 
 //Push a pokemon into storage
+
 const sendToStorage = () => {
 
     const pokemon = {
@@ -798,6 +1004,7 @@ const sendToStorage = () => {
 }
 
 //Confirm name for Starter
+
 okCongratsElement.addEventListener(`click`, () => {
     let audioUrl = "Sound Effects/click-buttons-ui-menu-sounds-effects-button-7-203601.mp3"
     let audio = new Audio(audioUrl)
@@ -821,6 +1028,7 @@ nameInputElement.addEventListener(`keypress`, (e) => {
 )
 
 //Click player pokemon to hear their sound (ANNOYING)
+
 playerSpriteElement.addEventListener(`click`, () => {
     let audioUrl = playerPokemon[0].audio
     let audio = new Audio(audioUrl)
@@ -831,6 +1039,7 @@ playerSpriteElement.addEventListener(`click`, () => {
 })
 
 //Same for opponent pokemon
+
 opponentSpriteElement.addEventListener(`click`, () => {
     let audioUrl = opponentPokemon[0].audio
     let audio = new Audio(audioUrl)
@@ -839,7 +1048,9 @@ opponentSpriteElement.addEventListener(`click`, () => {
     console.log
     audio.play()
 })
+
 //Set Starter's name and progress story
+
 const nameMyStarter = () => {
     starterSelectContainerElement.classList.add(`inactive`)
     selectionCongratsElement.classList.add(`inactive`)
@@ -855,7 +1066,9 @@ const nameMyStarter = () => {
 
     textBoxElement.innerText = `With ${playerName} the ${pokemonNature.toLowerCase()} ${pokemonSpecies}, at your side, you venture out into the wilds (despite being 10 years old)!`
 }
+
 //Generate stats according to nature
+
 const generateATK = async (species, nature) => {
     let response = await axios.get(
         `https://pokeapi.co/api/v2/pokemon/${species}/`
@@ -950,12 +1163,16 @@ const generateSPD = async (species, nature) => {
     }
     console.log(`It has ${pokemonSpd} SPD!`)
 }
+
 //Randomly determine nature from Array
+
 const determineNature = () => {
     const randomNature = naturesArray[Math.floor(Math.random() * naturesArray.length)];
     return randomNature
 }
+
 //Nature Array
+
 const naturesArray = [
     "Adamant", "Bashful", "Bold", "Brave", "Calm",
     "Careful", "Docile", "Gentle", "Hardy", "Hasty",
@@ -963,7 +1180,9 @@ const naturesArray = [
     "Naive", "Naughty", "Quiet", "Quirky", "Rash",
     "Relaxed", "Sassy", "Serious", "Timid"
 ]
+
 //Object to consult for nature bonuses and penalties
+
 const naturesObject = {
     Adamant: { bonus: "atk", pen: "spatk" },
     Bashful: { bonus: "spatk", pen: "spatk" },
@@ -991,7 +1210,9 @@ const naturesObject = {
     Serious: { bonus: "spd", pen: "spd" },
     Timid: { bonus: "spd", pen: "atk" },
 }
+
 //type chart for damage modifiers
+
 const typeAdvantage = {
     "none": {
         super: [],
@@ -1073,6 +1294,7 @@ const typeAdvantage = {
 
 //Update the volume of currently playing sounds when slider
 //is interacted with.
+
 const updateVolume = () => {
     const audios = document.querySelectorAll('audio')
     const volumeValue = parseFloat(volumeSliderElement.value)
@@ -1081,7 +1303,6 @@ const updateVolume = () => {
         audio.volume = volumeValue
     })
 }
-
 
 //Restart button to restart all values and screens
 

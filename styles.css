@@ -1,6 +1,9 @@
 
+/* For the animations, I asked ChatGPT how to do animations and it gave me a simple explanation that I used to
+create what is in this file. */
 
-/* Targeting all elements, box-sizing instructs browser to include border and padding in its width and height */
+/* Targeting all elements, box-sizing instructs browser to include border and padding in its width and height 
+I learned this targeting style from Web Dev Simplified, on YouTube, which has some neat tips.*/
 *, ::before, ::after {
     box-sizing:border-box;
     font-family: "Press Start 2P", system-ui;
@@ -14,6 +17,10 @@
     *, ::before, ::after {
         font-size: 16px;
     }
+}
+
+button {
+    border: 3px solid #0f380f;
 }
 
 button:hover {
@@ -220,8 +227,14 @@ body {
     justify-content: left;
     flex-direction: row;
 }
+  
+@keyframes bounce {
+  from { transform: translateY(0); }
+  to { transform: translateY(-5px); }
+}
 
 #opponentSprite {
+    animation: bounce 0.8s infinite alternate;
     margin-left: 300px;
     filter: hue-rotate(100deg) brightness(0.6) saturate(1.5);
     width:80px;
@@ -253,6 +266,7 @@ body {
 }
 
 #playerSprite {
+    animation: bounce 0.8s infinite alternate;
     width:100px;
     margin-left: 100px;
     justify-content: left;
@@ -267,13 +281,14 @@ body {
     display: flex;
     justify-content: space-evenly;
     flex-direction: column;
-    width:35%;
+    width:40%;
     align-items: center;
 }
 
 #fightButtonContainer > button {
     margin-top: 10px;
-    height: 50px;
+    height: 22px;
+
 }
 
 #fightOptnsContainer {
