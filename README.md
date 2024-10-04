@@ -1,6 +1,6 @@
 # Pokemon: Rivals!
 
-![Title Screen](Rivals_title_screen.jpeg)
+![Title Screen](Pictures/Rivals_title_screen.jpeg)
 
 ## Description
 Pokémon: Rivals! is a browser-based game that puts you into a series of Pokémon encounters. With simple A/B decision-making mechanics, you'll be able to battle randomly generated Pokémon from the vast Pokémon world, using real data pulled from PokéAPI.
@@ -16,7 +16,7 @@ See how many battles you can win and what Pokémon you can find!
 Multiple fights, save score, pokemon by rarity, save and swap pokemon, catch chance determined by SPD
 
 ## Wireframe
-![WireFrame](PokemonRivals.jpg)
+![WireFrame](Pictures/PokemonRivals.jpg)
 
 ### Credits
 PokéAPI is owned by Paul Hallet, Tim Malone and Alessandro Pezzé. Alongside them other core maintainers include Charles Marttinen and Sargun Vohra.
